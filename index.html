@@ -1,0 +1,3158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SC PINCANG XX BUNCIT</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* ================================================================
+   [A] VARIABEL — gold dulu, neon sesudahnya (neon menang global,
+   nilai gold dipulihkan khusus di #tab2 & #tab3 di bagian [D])
+================================================================ */
+:root{
+    --gold:#ffd54a; --gold2:#ffb300; --gold3:#fff1a8; --amber:#ff8f00;
+    --purple:#9b5cff; --green:#4dff9a; --red:#ff4d67;
+    --bg:#050505; --panel:rgba(18,16,10,.88); --text:#f5f1df;
+    --muted:#8e8975; --line:rgba(255,193,7,.25);
+}
+:root{
+    --nc:#00f0ff; --nm:#ff00de; --nl:#39ff14; --na:#ffae00; --np:#ff1493;
+    --bg:#020208; --panel:rgba(4,4,14,0.92);
+}
+
+/* ================================================================
+   [B] STYLE TAB 1 (SC DEPO BCA) — verbatim.
+       Hanya selector yang BENTROK (textarea, table, th, td, tr)
+       yang diberi prefiks #tab1 — isinya tetap sama.
+================================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { min-height: 100vh; color: #b0b8d0; font-family: 'Rajdhani', sans-serif; background: var(--bg); overflow-x: hidden; }
+.wallpaper { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); }
+.wallpaper img { display: block; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.4) saturate(1.8) brightness(0,99); }
+.wallpaper::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,2,8,0.25) 0%, rgba(2,2,8,0.15) 30%, rgba(2,2,8,0.35) 100%, rgba(2,2,8,0.85) 100%), linear-gradient(90deg, rgba(0,240,255,0.04), transparent 25%, transparent 75%, rgba(255,0,222,0.04)); }
+.wallpaper::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 100px rgba(0,240,255,0.05), inset 0 0 180px rgba(255,0,222,0.03), inset 0 0 250px rgba(2,2,8,0.35); }
+.nebula { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 80% 50% at 30% 20%, rgba(0,80,255,0.04), transparent), radial-gradient(ellipse 60% 40% at 70% 30%, rgba(255,0,222,0.03), transparent), radial-gradient(ellipse 90% 60% at 50% 80%, rgba(0,240,255,0.02), transparent); }
+.aurora { position: fixed; top: -20%; left: -10%; right: -10%; height: 60%; z-index: 1; pointer-events: none; opacity: 0.3; background: linear-gradient(180deg, transparent, rgba(0,240,255,0.03) 20%, rgba(255,0,222,0.02) 40%, rgba(57,255,20,0.01) 60%, transparent 80%); filter: blur(40px); animation: auroraW 12s ease-in-out infinite alternate; }
+@keyframes auroraW { 0% { transform: translateX(-5%) skewX(-2deg) scaleY(1); } 50% { transform: translateX(3%) skewX(1deg) scaleY(1.1); } 100% { transform: translateX(5%) skewX(2deg) scaleY(0.95); } }
+.matrix { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.mcol { position: absolute; top: -100%; font-family: Consolas, monospace; font-size: 11px; line-height: 1; color: var(--nc); writing-mode: vertical-rl; text-orientation: upright; animation: mFall linear infinite; }
+@keyframes mFall { 0% { transform: translateY(-100%); } 100% { transform: translateY(200vh); } }
+.road-wrap { position: fixed; bottom: 0; left: 0; right: 0; height: 140px; z-index: 1; pointer-events: none; overflow: hidden; perspective: 350px; }
+.road { position: absolute; bottom: 0; left: -15%; right: -15%; height: 120px; background: linear-gradient(180deg, transparent 0%, rgba(6,6,15,0.7) 35%, rgba(8,8,26,0.85) 100%); transform: rotateX(58deg); transform-origin: bottom center; }
+.road::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(0,240,255,0.04) 48px, rgba(0,240,255,0.04) 50px), repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(0,240,255,0.02) 48px, rgba(0,240,255,0.02) 50px); animation: rScr 1s linear infinite; }
+@keyframes rScr { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+.road::after { content: ""; position: absolute; top: 8%; left: 50%; width: 3px; height: 400%; transform: translateX(-50%); background: repeating-linear-gradient(180deg, var(--na), var(--na) 18px, transparent 18px, transparent 55px); animation: lnS 0.6s linear infinite; box-shadow: 0 0 8px rgba(255,174,0,0.4); }
+@keyframes lnS { 0% { transform: translateX(-50%) translateY(0); } 100% { transform: translateX(-50%) translateY(55px); } }
+.spdln { position: absolute; height: 1px; border-radius: 1px; animation: spF linear infinite; }
+@keyframes spF { 0% { transform: translateX(-100vw) scaleX(0.3); opacity: 0; } 20% { opacity: 1; transform: scaleX(1); } 80% { opacity: 0.8; } 100% { transform: translateX(100vw) scaleX(0.3); opacity: 0; } }
+.fog { position: fixed; bottom: 60px; left: -20%; right: -20%; height: 80px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(0,240,255,0.008) 40%, rgba(255,0,222,0.005) 60%, transparent); filter: blur(18px); animation: fogD 15s ease-in-out infinite alternate; }
+@keyframes fogD { 0% { transform: translateX(-5%); } 100% { transform: translateX(5%); } }
+.ltng { position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 0.06s; }
+.ltng.on { opacity: 1; background: rgba(200,220,255,0.03); }
+.embers { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.embr { position: absolute; border-radius: 50%; animation: eRi linear infinite; }
+@keyframes eRi { 0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; } 10% { opacity: 1; } 50% { transform: translateY(-50vh) translateX(20px) scale(0.7); opacity: 0.7; } 100% { transform: translateY(-105vh) translateX(-10px) scale(0.2); opacity: 0; } }
+.content { position: relative; z-index: 4; width: min(1160px, 100%); margin: 0 auto; padding: 24px 20px 160px; }
+@keyframes trB { 0% { background-position: 0% 0%; } 25% { background-position: 100% 0%; } 50% { background-position: 100% 100%; } 75% { background-position: 0% 100%; } 100% { background-position: 0% 0%; } }
+.nf { padding: 2px; border-radius: 16px; position: relative; background: linear-gradient(135deg, var(--nc), var(--nm), var(--nl), var(--na), var(--np), var(--nc)); background-size: 500% 500%; animation: trB 6s linear infinite; }
+.nf::before { content: ""; position: absolute; inset: -4px; border-radius: 20px; background: linear-gradient(135deg, rgba(0,240,255,0.07), rgba(255,0,222,0.05), transparent); background-size: 500% 500%; animation: trB 6s linear infinite; filter: blur(8px); z-index: -1; }
+.nfi { background: var(--panel); border-radius: 14px; padding: 22px 26px; position: relative; overflow: hidden; }
+.nfi::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(110deg, transparent 35%, rgba(0,240,255,0.02) 42%, rgba(255,0,222,0.015) 48%, transparent 55%); animation: holo 7s ease-in-out infinite alternate; }
+@keyframes holo { 0% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.glitch { position: relative; font-family: 'Orbitron', monospace; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.glitch::before { color: var(--nc); z-index: -1; animation: gl1 3s infinite linear alternate-reverse; clip-path: inset(0 0 65% 0); }
+.glitch::after { color: var(--nm); z-index: -2; animation: gl2 2s infinite linear alternate-reverse; clip-path: inset(65% 0 0 0); }
+@keyframes gl1 { 0% { transform: translate(0); } 20% { transform: translate(-2px, 1px); } 40% { transform: translate(1px, -1px); } 60% { transform: translate(-1px, 2px); } 80% { transform: translate(2px, -1px); } 100% { transform: translate(0); } }
+@keyframes gl2 { 0% { transform: translate(0); } 20% { transform: translate(2px, -1px); } 40% { transform: translate(-1px, 1px); } 60% { transform: translate(1px, -2px); } 80% { transform: translate(-2px, 1px); } 100% { transform: translate(0); } }
+.hdr { margin-bottom: 24px; }
+.hdr-c { display: flex; align-items: center; justify-content: center; gap: 18px; padding: 22px 30px; background: linear-gradient(180deg, rgba(8,8,20,0.98), rgba(3,3,10,0.99)); border-radius: 14px; position: relative; overflow: hidden; }
+.hdr-c::before { content: ""; position: absolute; top: 0; left: -50%; width: 35%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0,240,255,0.05), rgba(255,0,222,0.03), transparent); animation: scnH 3s ease-in-out infinite; }
+@keyframes scnH { 0% { left: -35%; } 100% { left: 100%; } }
+.hdr-c::after { content: ""; position: absolute; bottom: 0; left: 2%; right: 2%; height: 2px; background: linear-gradient(90deg, transparent, var(--nc), var(--nm), var(--nl), var(--na), var(--np), var(--nc), transparent); background-size: 300% auto; animation: stF 2s linear infinite; box-shadow: 0 0 10px var(--nc), 0 0 25px rgba(0,240,255,0.2); }
+@keyframes stF { 0% { background-position: 0%; } 100% { background-position: 300%; } }
+.hicon { font-size: 40px; filter: drop-shadow(0 0 12px var(--nc)) drop-shadow(0 0 24px var(--nm)); animation: iH 4s ease-in-out infinite; }
+@keyframes iH { 0%, 100% { filter: drop-shadow(0 0 12px var(--nc)) drop-shadow(0 0 24px var(--nm)); transform: scale(1); } 50% { filter: drop-shadow(0 0 20px var(--nm)) drop-shadow(0 0 40px var(--nc)); transform: scale(1.1); } }
+.leds { display: flex; gap: 7px; align-items: center; }
+.led { width: 8px; height: 8px; border-radius: 50%; animation: lK ease-in-out infinite alternate; }
+.lc { background: var(--nc); box-shadow: 0 0 8px var(--nc); }
+.lm { background: var(--nm); box-shadow: 0 0 8px var(--nm); animation-delay: .2s; }
+.ll { background: var(--nl); box-shadow: 0 0 8px var(--nl); animation-delay: .4s; }
+.la { background: var(--na); box-shadow: 0 0 8px var(--na); animation-delay: .6s; }
+.lp { background: var(--np); box-shadow: 0 0 8px var(--np); animation-delay: .8s; }
+@keyframes lK { 0% { opacity: .2; transform: scale(.7); } 100% { opacity: 1; transform: scale(1.15); } }
+.viz { display: flex; align-items: flex-end; justify-content: center; gap: 2px; height: 30px; margin-top: 10px; }
+.vb { width: 3px; border-radius: 2px 2px 0 0; animation: vB ease-in-out infinite alternate; }
+@keyframes vB { 0% { height: 2px; } 100% { height: 30px; } }
+.instrs { display: flex; justify-content: center; gap: 18px; margin-top: 12px; flex-wrap: wrap; }
+.mg { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.mgr { width: 42px; height: 42px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,240,255,0.1); }
+.mgr::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; border: 2px solid transparent; }
+.mgc .mgr::after { border-top-color: var(--nc); border-right-color: var(--nm); animation: ms 2s linear infinite; filter: drop-shadow(0 0 3px var(--nc)); }
+.mga .mgr::after { border-top-color: var(--na); border-right-color: var(--nl); animation: ms 2.5s linear infinite reverse; filter: drop-shadow(0 0 3px var(--na)); }
+.mgl .mgr::after { border-top-color: var(--nl); border-right-color: var(--nc); animation: ms 3s linear infinite; filter: drop-shadow(0 0 3px var(--nl)); }
+.mgp .mgr::after { border-top-color: var(--np); border-right-color: var(--na); animation: ms 1.8s linear infinite reverse; filter: drop-shadow(0 0 3px var(--np)); }
+@keyframes ms { to { transform: rotate(360deg); } }
+.mgv { font-family: 'Orbitron', monospace; font-size: 9px; font-weight: 700; position: relative; z-index: 1; }
+.mgc .mgv { color: var(--nc); text-shadow: 0 0 6px rgba(0,240,255,0.5); }
+.mga .mgv { color: var(--na); text-shadow: 0 0 6px rgba(255,174,0,0.5); }
+.mgl .mgv { color: var(--nl); text-shadow: 0 0 6px rgba(57,255,20,0.5); }
+.mgp .mgv { color: var(--np); text-shadow: 0 0 6px rgba(255,20,147,0.5); }
+.mglb { font-family: 'Orbitron', monospace; font-size: 7px; color: #445; letter-spacing: 2px; text-transform: uppercase; }
+.isec { margin-bottom: 24px; }
+.ilbl { display: flex; align-items: center; gap: 8px; font-family: 'Orbitron', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--nc); font-weight: 700; margin-bottom: 10px; text-shadow: 0 0 12px rgba(0,240,255,0.5); }
+#tab1 textarea, .modal-textarea { width: 100%; height: 160px; display: block; resize: vertical; background: rgba(2,2,8,0.85); border: 1px solid rgba(0,240,255,0.1); border-left: 3px solid var(--nc); border-radius: 8px; color: var(--nl); padding: 14px; font-family: Consolas, monospace; font-size: 13px; line-height: 1.7; outline: none; transition: .3s; text-shadow: 0 0 5px rgba(57,255,20,0.3); }
+#tab1 textarea:focus, .modal-textarea:focus { border-color: var(--nc); border-left-color: var(--nm); box-shadow: 0 0 20px rgba(0,240,255,0.08), inset 0 0 30px rgba(0,240,255,0.02); }
+#tab1 textarea::placeholder, .modal-textarea::placeholder { color: #1a1a30; text-shadow: none; }
+.brow { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+button { position: relative; overflow: hidden; font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 13px 32px; border: none; border-radius: 8px; cursor: pointer; transition: .25s; }
+.bgo { background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(255,0,222,0.1)); color: var(--nc); border: 1px solid var(--nc); box-shadow: 0 0 12px rgba(0,240,255,0.2), inset 0 0 12px rgba(0,240,255,0.03); }
+.bgo:hover { background: linear-gradient(135deg, rgba(0,240,255,0.2), rgba(255,0,222,0.2)); color: #fff; letter-spacing: 3px; box-shadow: 0 0 28px rgba(0,240,255,0.4), 0 0 50px rgba(0,240,255,0.1), inset 0 0 20px rgba(0,240,255,0.06); transform: translateY(-2px); }
+.bgo:active { transform: scale(.96); }
+.bcopy { background: linear-gradient(135deg, rgba(57,255,20,0.08), rgba(0,240,255,0.08)); color: var(--nl); border: 1px solid var(--nl); box-shadow: 0 0 12px rgba(57,255,20,0.18), inset 0 0 12px rgba(57,255,20,0.03); }
+.bcopy:hover { background: linear-gradient(135deg, rgba(57,255,20,0.18), rgba(0,240,255,0.18)); color: #fff; letter-spacing: 3px; box-shadow: 0 0 28px rgba(57,255,20,0.35), 0 0 45px rgba(0,240,255,0.12), inset 0 0 20px rgba(57,255,20,0.06); transform: translateY(-2px); }
+.bcopy:active { transform: scale(.96); }
+.bcopy.copied { color: #020208; background: var(--nl); box-shadow: 0 0 30px rgba(57,255,20,0.65); }
+.bgo::after { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0,240,255,0.18), transparent); transition: .6s; }
+.bgo:hover::after { left: 140%; }
+.bcl { background: rgba(255,20,147,0.05); color: var(--np); border: 1px solid rgba(255,20,147,0.2); box-shadow: 0 0 6px rgba(255,20,147,0.05); }
+.bcl:hover { background: rgba(255,20,147,0.13); color: #fff; box-shadow: 0 0 16px rgba(255,20,147,0.2); transform: translateY(-2px); }
+.bcl:active { transform: scale(.96); }
+.status { margin-top: 12px; font-size: 12px; color: #333; min-height: 18px; letter-spacing: 1px; }
+.status.ok { color: var(--nl); text-shadow: 0 0 10px rgba(57,255,20,0.5); }
+.status.err { color: var(--na); text-shadow: 0 0 10px rgba(255,174,0,0.5); }
+.gsec { margin-bottom: 24px; }
+.gpanel { display: flex; justify-content: center; align-items: center; gap: 50px; flex-wrap: wrap; padding: 26px; background: var(--panel); border-radius: 14px; }
+.g { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.gr { width: 120px; height: 120px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(0,240,255,0.015), transparent 70%); }
+.gr::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(0,240,255,0.06); }
+.gr::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 3px solid transparent; }
+.gc .gr::after { border-top-color: var(--nc); border-right-color: var(--nm); animation: ds 2s linear infinite; filter: drop-shadow(0 0 5px var(--nc)); }
+.ga .gr::after { border-top-color: var(--na); border-right-color: var(--nl); animation: ds 2.8s linear infinite reverse; filter: drop-shadow(0 0 5px var(--na)); }
+@keyframes ds { to { transform: rotate(360deg); } }
+.gdk { position: absolute; inset: 16px; border-radius: 50%; border: 1px solid rgba(0,240,255,0.04); }
+.gtkw { position: absolute; inset: 8px; border-radius: 50%; }
+.gtk { position: absolute; width: 1px; height: 9px; background: rgba(0,240,255,0.1); top: 0; left: 50%; transform-origin: 0 48px; }
+.gn { position: absolute; bottom: 50%; left: 50%; width: 2px; height: 36px; transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); border-radius: 1px; z-index: 2; animation: nSw 4s ease-in-out infinite alternate; }
+.gc .gn { background: linear-gradient(180deg, var(--nc), transparent); box-shadow: 0 0 5px var(--nc); }
+.ga .gn { background: linear-gradient(180deg, var(--na), transparent); box-shadow: 0 0 5px var(--na); }
+@keyframes nSw { 0% { transform: translateX(-50%) rotate(-90deg); } 100% { transform: translateX(-50%) rotate(90deg); } }
+.gdt { position: absolute; width: 7px; height: 7px; border-radius: 50%; z-index: 3; }
+.gc .gdt { background: var(--nc); box-shadow: 0 0 7px var(--nc); }
+.ga .gdt { background: var(--na); box-shadow: 0 0 7px var(--na); }
+.gv { font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 900; position: relative; z-index: 2; text-align: center; margin-top: 5px; }
+.gc .gv { color: var(--nc); text-shadow: 0 0 16px rgba(0,240,255,0.6); }
+.ga .gv { color: var(--na); text-shadow: 0 0 16px rgba(255,174,0,0.6); }
+.glb { font-family: 'Orbitron', monospace; font-size: 9px; color: #335; letter-spacing: 3px; text-transform: uppercase; }
+.tsec { position: relative; }
+.tc { background: var(--panel); border-radius: 14px; overflow: hidden; }
+.tstrip { height: 3px; background: linear-gradient(90deg, var(--nc), var(--nm), var(--nl), var(--na), var(--np), var(--nc)); background-size: 400% auto; animation: stF 2s linear infinite; box-shadow: 0 0 10px rgba(0,240,255,0.3), 0 2px 25px rgba(255,0,222,0.12); }
+#tab1 table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+#tab1 th { background: linear-gradient(180deg, rgba(8,8,20,1), rgba(4,4,12,1)); padding: 13px 16px; font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; border-bottom: 1px solid rgba(0,240,255,0.1); border-right: 1px solid rgba(0,240,255,0.02); }
+#tab1 th:first-child { width: 70%; text-align: left; color: var(--nc); text-shadow: 0 0 10px rgba(0,240,255,0.3); }
+#tab1 th:last-child { width: 30%; text-align: right; border-right: none; color: var(--na); text-shadow: 0 0 10px rgba(255,174,0,0.3); }
+#tab1 td { padding: 10px 16px; font-size: 13px; border-bottom: 1px solid rgba(0,240,255,0.02); border-right: 1px solid rgba(0,240,255,0.01); word-break: break-word; transition: .2s; }
+#tab1 td:first-child { color: #8890a8; }
+#tab1 td:last-child { border-right: none; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 12px; color: #d0d0e8; text-align: right; text-shadow: 0 0 4px rgba(255,174,0,0.1); }
+#tab1 tbody tr { background: rgba(4,4,14,0.4); transition: .2s; }
+#tab1 tbody tr:nth-child(even) { background: rgba(8,8,22,0.3); }
+#tab1 tbody tr:hover { background: rgba(0,240,255,0.04); box-shadow: inset 5px 0 0 var(--nc), inset 0 0 30px rgba(0,240,255,0.01); }
+#tab1 tbody tr:hover td:first-child { color: var(--nc); text-shadow: 0 0 8px rgba(0,240,255,0.4); }
+#tab1 tbody tr:hover td:last-child { color: var(--na); text-shadow: 0 0 10px rgba(255,174,0,0.5); }
+#tab1 tbody tr:last-child td { border-bottom: none; }
+#tab1 .erow td { text-align: center; color: #181830; padding: 30px; font-family: 'Orbitron', monospace; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #020208; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--nc), var(--nm)); border-radius: 3px; }
+
+/* Modal Salin Manual — Tab 1 */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; }
+.modal-box { background: #050510; border: 1px solid var(--nc); padding: 20px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 0 30px rgba(0,240,255,0.2); }
+.modal-title { color: var(--nc); font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 10px; letter-spacing: 2px; }
+.modal-desc { color: #b0b8d0; font-size: 12px; margin-bottom: 15px; text-align: center; }
+.modal-textarea { width: 100%; height: 200px; background: rgba(2,2,8,0.9); color: var(--nl); border: 1px solid rgba(0,240,255,0.3); border-radius: 6px; padding: 10px; font-family: Consolas, monospace; resize: none; }
+.modal-btns { text-align: center; margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
+.modal-btn { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; }
+.modal-btn-copy { background: var(--nl); color: #020208; }
+.modal-btn-close { background: var(--np); color: #fff; }
+
+/* ================================================================
+   [C] TAB BAR — 3 tombol
+================================================================ */
+.tabbar { display: flex; gap: 10px; margin-bottom: 22px; padding: 6px; background: var(--panel); border: 1px solid rgba(0,240,255,.12); border-radius: 14px; position: relative; overflow: hidden; }
+.tabbar::after { content: ""; position: absolute; bottom: 0; left: 2%; right: 2%; height: 2px; background: linear-gradient(90deg, transparent, var(--nc), var(--nm), var(--nl), var(--na), var(--np), var(--nc), transparent); background-size: 300% auto; animation: stF 2s linear infinite; box-shadow: 0 0 10px var(--nc); }
+.tab-btn { flex: 1; background: rgba(2,2,8,.6); border: 1px solid rgba(0,240,255,.08); color: #5a6480; padding: 14px 8px; border-radius: 9px; font-size: 10px; }
+.tab-btn:hover { color: #9aa4c0; border-color: rgba(0,240,255,.3); }
+.tab-btn.active { color: var(--nc); border-color: var(--nc); background: linear-gradient(135deg, rgba(0,240,255,.12), rgba(255,0,222,.10)); box-shadow: 0 0 16px rgba(0,240,255,.25); text-shadow: 0 0 10px rgba(0,240,255,.6); }
+.tab-btn.tgold.active { color: var(--gold); border-color: var(--gold); background: linear-gradient(135deg, rgba(255,193,7,.14), rgba(255,143,0,.10)); box-shadow: 0 0 16px rgba(255,193,7,.3); text-shadow: 0 0 10px rgba(255,193,7,.6); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: tabIn .4s ease; }
+@keyframes tabIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ================================================================
+   [D] STYLE GOLD — dipakai bersama #tab2 (KACAU) & #tab3 (WD).
+       Selector bentrok di-scope ke kedua tab.
+================================================================ */
+#tab2, #tab3{
+    --bg:#050505; --panel:rgba(18,16,10,.88); --text:#f5f1df;
+    --muted:#8e8975; --line:rgba(255,193,7,.25);
+    position:relative; overflow:hidden; border-radius:16px; padding:10px 0 30px;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 15% 10%, rgba(255,193,7,.12), transparent 24%),
+        radial-gradient(circle at 85% 18%, rgba(155,92,255,.09), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(255,143,0,.08), transparent 30%);
+}
+.gold *{ font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+.gold button{ letter-spacing:normal; text-transform:none; }
+
+/* grid emas */
+.g-grid{
+    position:absolute; inset:0; pointer-events:none; opacity:.45;
+    background-image:
+        linear-gradient(rgba(255,193,7,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,193,7,.035) 1px, transparent 1px);
+    background-size:42px 42px;
+    -webkit-mask-image:linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-image:linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+}
+/* portal emas */
+.g-portal{
+    position:absolute; width:620px; height:620px; left:50%; top:50%;
+    transform:translate(-50%,-50%); pointer-events:none;
+    border:1px solid rgba(255,193,7,.07); border-radius:50%;
+    box-shadow:0 0 100px rgba(255,193,7,.035), 0 0 220px rgba(155,92,255,.025), inset 0 0 120px rgba(255,193,7,.025);
+    animation:portal 14s linear infinite;
+}
+@keyframes portal{
+    0%{ transform:translate(-50%,-50%) rotate(0deg) scale(.88); }
+    50%{ transform:translate(-50%,-50%) rotate(180deg) scale(1.04); }
+    100%{ transform:translate(-50%,-50%) rotate(360deg) scale(.88); }
+}
+
+.container{ width:100%; max-width:1100px; margin:auto; display:flex; flex-direction:column; gap:18px; position:relative; }
+.neon-title{ text-align:center; padding:5px 0 12px; }
+.neon-title img{ display:block; margin:0 auto 10px; max-width:100%; height:auto; }
+.neon-title h1{ font-size:31px; font-weight:950; letter-spacing:8px; color:#fff3b0; text-shadow:0 0 5px #fff, 0 0 13px var(--gold), 0 0 30px var(--gold2), 0 0 60px rgba(255,143,0,.35); animation:titleGlow 2.8s ease-in-out infinite alternate; }
+.neon-title span{ display:block; margin-top:6px; font-size:9px; letter-spacing:4px; color:#d8c77d; opacity:.78; }
+@keyframes titleGlow{ from{ filter:brightness(.9); } to{ filter:brightness(1.25); } }
+.togelon-logo{ display:block; width:100%; max-width:520px; height:auto; margin:0 auto 10px; object-fit:contain; filter:drop-shadow(0 0 5px rgba(255,255,255,.75)) drop-shadow(0 0 14px rgba(255,193,7,.65)) drop-shadow(0 0 32px rgba(255,143,0,.35)); animation:logoGlow 2.8s ease-in-out infinite alternate; }
+@keyframes logoGlow{
+    from{ filter:drop-shadow(0 0 4px rgba(255,255,255,.65)) drop-shadow(0 0 10px rgba(255,193,7,.45)); transform:scale(.99); }
+    to{ filter:drop-shadow(0 0 7px rgba(255,255,255,.9)) drop-shadow(0 0 18px rgba(255,193,7,.75)) drop-shadow(0 0 34px rgba(255,143,0,.4)); transform:scale(1.005); }
+}
+.card{ position:relative; background:linear-gradient(135deg, rgba(255,193,7,.055), rgba(155,92,255,.025), rgba(255,143,0,.025)), var(--panel); backdrop-filter:blur(18px); border:1px solid var(--line); border-radius:15px; padding:20px; overflow:hidden; box-shadow:0 0 0 1px rgba(255,193,7,.025), 0 15px 45px rgba(0,0,0,.45), inset 0 0 30px rgba(255,193,7,.018); }
+.card::before{ content:""; position:absolute; top:0; left:-40%; width:38%; height:1px; background:linear-gradient(90deg, transparent, var(--gold), #fff, var(--purple), transparent); box-shadow:0 0 10px var(--gold); animation:scanLine 5.5s linear infinite; }
+@keyframes scanLine{ from{ left:-40%; } to{ left:140%; } }
+.section-header{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:850; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:15px; text-shadow:0 0 9px rgba(255,193,7,.5); }
+.textarea-wrapper{ display:flex; gap:15px; }
+#tab2 textarea, #tab3 textarea{ width:100%; height:145px; background:linear-gradient(135deg, rgba(255,193,7,.025), rgba(155,92,255,.018)), rgba(0,0,0,.86); border:1px solid rgba(255,193,7,.25); border-radius:11px; color:#ffe999; font-family:'Courier New',monospace; font-size:12px; padding:14px; resize:vertical; outline:none; box-shadow:inset 0 0 20px rgba(255,193,7,.025); transition:.25s; }
+#tab2 textarea::placeholder, #tab3 textarea::placeholder{ color:#665e48; }
+#tab2 textarea:focus, #tab3 textarea:focus{ border-color:var(--gold); box-shadow:0 0 6px var(--gold), 0 0 22px rgba(255,193,7,.16), inset 0 0 20px rgba(255,193,7,.035); }
+.action-btns{ display:flex; flex-direction:column; gap:9px; width:150px; }
+.action-btn, .table-action-btn{ position:relative; background:linear-gradient(135deg, rgba(255,193,7,.07), rgba(155,92,255,.035)); border:1px solid rgba(255,193,7,.28); color:#bdb49a; padding:11px 15px; border-radius:8px; font-size:10px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; transition:.25s; overflow:hidden; }
+.action-btn::before{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,.13), transparent); transform:translateX(-100%); transition:.45s; }
+.action-btn:hover::before{ transform:translateX(100%); }
+.action-btn:hover, .table-action-btn:hover{ color:#fff; border-color:var(--gold); box-shadow:0 0 8px rgba(255,193,7,.35), 0 0 22px rgba(255,193,7,.08); transform:translateY(-2px); }
+.hasil-btn{ color:#fff3b0; background:linear-gradient(135deg, rgba(255,193,7,.2), rgba(255,143,0,.11), rgba(155,92,255,.07)); border-color:var(--gold); text-shadow:0 0 8px rgba(255,193,7,.8); box-shadow:0 0 9px rgba(255,193,7,.22), inset 0 0 15px rgba(255,193,7,.035); }
+.hasil-btn:hover{ border-color:#fff; box-shadow:0 0 9px var(--gold), 0 0 28px rgba(255,193,7,.28); }
+.hasil-btn.success{ background:linear-gradient(135deg, #b77900, #6b3fc0); border-color:#fff; box-shadow:0 0 12px var(--gold), 0 0 28px rgba(155,92,255,.4); }
+
+/* toggle prefix e-wallet (Tab 3) */
+.prefix-toggle{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:12px; padding:10px 14px;
+    background:rgba(255,193,7,.04); border:1px solid rgba(255,193,7,.15); border-radius:8px;
+    font-size:10px; color:#bdb49a; cursor:pointer; user-select:none; letter-spacing:.5px;
+}
+.prefix-toggle:hover{ border-color:rgba(255,193,7,.4); }
+.prefix-toggle input{ accent-color:#ffd54a; width:15px; height:15px; cursor:pointer; flex-shrink:0; }
+.prefix-toggle b{ color:var(--gold); font-weight:850; }
+
+.stats-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:15px; }
+.stat-card{ position:relative; background:linear-gradient(135deg, rgba(255,193,7,.065), rgba(155,92,255,.025)), rgba(14,13,10,.86); border:1px solid rgba(255,193,7,.18); border-radius:12px; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; box-shadow:inset 0 0 20px rgba(255,193,7,.018), 0 10px 25px rgba(0,0,0,.25); transition:.25s; }
+.stat-card:hover{ border-color:rgba(255,193,7,.48); box-shadow:0 0 18px rgba(255,193,7,.1), inset 0 0 20px rgba(255,193,7,.035); }
+.stat-icon{ padding:12px; border-radius:9px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 12px currentColor; }
+.stat-text{ text-align:right; }
+.stat-value{ font-size:23px; font-weight:950; color:#fff4bf; text-shadow:0 0 10px rgba(255,193,7,.18); }
+.stat-label{ font-size:9px; color:#8e8975; text-transform:uppercase; font-weight:800; letter-spacing:1px; margin-top:3px; }
+.table-header-bar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid rgba(255,193,7,.1); padding-bottom:10px; }
+.table-actions{ display:flex; gap:8px; }
+.table-action-btn{ padding:8px 13px; background:rgba(255,193,7,.045); }
+.table-responsive{ overflow-x:auto; }
+#tab2 table, #tab3 table{ width:100%; border-collapse:collapse; font-size:11px; }
+#tab2 th, #tab3 th{ color:var(--gold); padding:13px 12px; font-weight:850; text-transform:uppercase; border-bottom:1px solid rgba(255,193,7,.3); text-align:left; font-size:9px; letter-spacing:1px; text-shadow:0 0 7px rgba(255,193,7,.4); white-space:nowrap; }
+#tab2 td, #tab3 td{ padding:11px 12px; border-bottom:1px solid rgba(255,255,255,.035); color:#c9c2ad; vertical-align:middle; }
+#tab2 tr, #tab3 tr{ transition:.2s; }
+#tab2 tr:hover td, #tab3 tr:hover td{ background:linear-gradient(90deg, rgba(255,193,7,.045), rgba(155,92,255,.035)); color:#fff; }
+.bank-badge{ font-weight:900; padding:4px 9px; border-radius:5px; text-align:center; font-size:9px; letter-spacing:.6px; display:inline-block; min-width:60px; box-shadow:0 0 8px rgba(255,255,255,.1); white-space:nowrap; }
+.bank-bni{ background:#fbbf24; color:#000; }
+.bank-bca{ background:#0758a8; color:#fff; }
+.bank-seabank{ background:#00d9ff; color:#001015; }
+.bank-mandiri{ background:#ff7b00; color:#fff; }
+.bank-bri{ background:#0646c0; color:#fff; }
+.bank-cimb{ background:#7b32d1; color:#fff; }
+.bank-dana{ background:#00bfe8; color:#001015; }
+.bank-ovo{ background:#8b45d8; color:#fff; }
+.bank-linkaja{ background:#e52c55; color:#fff; }
+.bank-gopay{ background:#00b9dc; color:#001015; }
+.bank-shopeepay{ background:#ee4d2d; color:#fff; }
+.bank-danamon{ background:#f26522; color:#fff; }
+.bank-permata{ background:#ba0c2f; color:#fff; }
+.bank-bsi{ background:#009378; color:#fff; }
+.bank-btn{ background:#da2c38; color:#fff; }
+.bank-default{ background:#34312a; color:#fff; }
+.empty-row{ text-align:center; color:#655f50; padding:45px; font-style:italic; letter-spacing:.5px; }
+.footer{ margin-top:5px; text-align:center; font-size:9px; color:#625c4e; letter-spacing:2px; text-shadow:0 0 8px rgba(255,193,7,.12); }
+.footer span{ color:var(--gold)!important; }
+.toast{ position:fixed; bottom:25px; left:50%; transform:translateX(-50%) translateY(100px); background:linear-gradient(135deg, rgba(255,193,7,.13), rgba(155,92,255,.12)); backdrop-filter:blur(15px); border:1px solid var(--gold); color:#fff; padding:12px 22px; border-radius:9px; font-size:11px; font-weight:850; letter-spacing:.5px; opacity:0; pointer-events:none; transition:.3s; box-shadow:0 0 12px rgba(255,193,7,.3), 0 0 30px rgba(155,92,255,.1); z-index:9999; }
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.bank-btn{ background:#da2c38; color:#fff; }
+.bank-default{ background:#34312a; color:#fff; }
+
+/* Font Bank Tab 3 putih */
+#tab3 .bank-badge{ color:#fff !important; }
+/* Kecualikan bank berlatar terang → tetap gelap */
+#tab3 .bank-bni,
+#tab3 .bank-seabank,
+#tab3 .bank-dana,
+#tab3 .bank-gopay{ color:#001015 !important; }
+
+.empty-row{ text-align:center; color:#655f50; padding:45px; font-style:italic; letter-spacing:.5px; }
+/* ================================================================
+   [E] RESPONSIVE
+================================================================ */
+@media (max-width:700px){
+    .content{ padding:12px 10px 140px; }
+    .tabbar{ gap:6px; }
+    .tab-btn{ font-size:8px; letter-spacing:.5px; padding:12px 4px; }
+    .hdr-c{ padding:14px; gap:10px; }
+    .hicon{ font-size:26px; }
+    .glitch{ font-size:12px !important; letter-spacing:2px !important; }
+    .brow{ flex-direction:column; gap:8px; }
+    #tab1 button, .modal-btn{ width:100%; }
+    #tab1 th, #tab1 td{ font-size:11px; padding:8px 10px; }
+    #tab1 th:first-child{ width:64%; }
+    #tab1 th:last-child{ width:36%; }
+    .gpanel{ flex-direction:column; gap:20px; padding:16px; }
+    .gr{ width:90px; height:90px; }
+    .gv{ font-size:14px; }
+    .gn{ height:26px; }
+    .viz{ height:18px; }
+    .instrs{ gap:10px; }
+    .mgr{ width:34px; height:34px; }
+    #tab2, #tab3{ padding:6px 0 20px; }
+    .togelon-logo{ width:180px; max-width:75%; }
+    .neon-title h1{ font-size:21px; letter-spacing:5px; }
+    .textarea-wrapper{ flex-direction:column; }
+    .action-btns{ width:100%; display:grid; grid-template-columns:repeat(3,1fr); }
+    .stats-grid{ grid-template-columns:1fr; }
+    .table-header-bar{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .card{ padding:15px; }
+    #tab2 th, #tab3 th, #tab2 td, #tab3 td{ padding:10px 8px; }
+}
+
+/* ================================================================
+   [F] LOGIN GATE — akses login (satu-satunya style baru)
+================================================================ */
+body.locked{ overflow:hidden; }
+body.locked .content{ display:none; }
+#loginGate{ position:fixed; inset:0; z-index:20000; display:flex; align-items:center; justify-content:center; padding:20px; background:radial-gradient(ellipse at 50% 30%, rgba(0,240,255,.06), transparent 55%), radial-gradient(ellipse at 50% 85%, rgba(255,0,222,.06), transparent 55%), rgba(2,2,8,.78); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); transition:opacity .45s ease; }
+#loginGate.gate-off{ opacity:0; pointer-events:none; }
+.lg-box{ position:relative; width:min(400px,100%); padding:2px; border-radius:18px; border:none; background:linear-gradient(135deg,var(--nc),var(--nm),var(--nl),var(--na),var(--np),var(--nc)); background-size:500% 500%; animation:trB 6s linear infinite; box-shadow:0 0 40px rgba(0,240,255,.18), 0 0 90px rgba(255,0,222,.08); }
+.lg-inner{ background:linear-gradient(180deg, rgba(8,8,20,.98), rgba(3,3,10,.99)); border-radius:16px; padding:30px 28px 24px; position:relative; overflow:hidden; }
+.lg-inner::before{ content:""; position:absolute; top:0; left:-50%; width:35%; height:100%; background:linear-gradient(90deg,transparent, rgba(0,240,255,.06), rgba(255,0,222,.04), transparent); animation:scnH 3.2s ease-in-out infinite; pointer-events:none; }
+.lg-head{ text-align:center; margin-bottom:4px; }
+.lg-icon{ font-size:34px; display:inline-block; filter:drop-shadow(0 0 10px var(--nc)) drop-shadow(0 0 22px var(--nm)); animation:iH 4s ease-in-out infinite; }
+.lg-title{ font-family:'Orbitron',monospace; font-weight:900; font-size:17px; letter-spacing:5px; color:#e8f6ff; margin-top:8px; text-shadow:0 0 12px rgba(0,240,255,.55); }
+.lg-sub{ font-family:'Orbitron',monospace; font-size:8px; letter-spacing:2px; color:#5a6480; margin-top:7px; text-transform:uppercase; }
+.lg-leds{ display:flex; gap:6px; justify-content:center; margin-top:12px; }
+.lg-field{ margin-top:16px; text-align:left; }
+.lg-label{ display:flex; align-items:center; gap:7px; font-family:'Orbitron',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--nc); font-weight:700; margin-bottom:7px; text-shadow:0 0 10px rgba(0,240,255,.45); }
+.lg-wrap{ position:relative; }
+.lg-input{ width:100%; background:rgba(2,2,8,.85); border:1px solid rgba(0,240,255,.16); border-left:3px solid var(--nc); border-radius:8px; color:var(--nl); padding:12px 42px 12px 14px; font-family:Consolas,monospace; font-size:14px; letter-spacing:1px; outline:none; transition:.25s; text-shadow:0 0 5px rgba(57,255,20,.3); }
+.lg-input::placeholder{ color:#1a1a30; text-shadow:none; }
+.lg-input:focus{ border-color:var(--nc); box-shadow:0 0 18px rgba(0,240,255,.12), inset 0 0 24px rgba(0,240,255,.03); }
+.lg-input:disabled{ opacity:.4; }
+.lg-eye{ position:absolute; top:50%; right:8px; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:15px; padding:5px; color:#5a6480; letter-spacing:0; text-transform:none; box-shadow:none; }
+.lg-eye:hover{ color:var(--nc); background:none; transform:translateY(-50%); }
+.lg-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:13px; font-size:11px; color:#7a85a0; font-family:'Rajdhani',sans-serif; }
+.lg-remember{ display:flex; align-items:center; gap:7px; cursor:pointer; user-select:none; letter-spacing:1px; font-weight:600; }
+.lg-remember input{ accent-color:#00f0ff; width:14px; height:14px; cursor:pointer; }
+#lgClock{ font-family:'Orbitron',monospace; font-size:9px; color:#4a5165; letter-spacing:2px; }
+.lg-btn{ width:100%; margin-top:18px; padding:14px; border:none; border-radius:9px; cursor:pointer; font-family:'Orbitron',monospace; font-size:12px; font-weight:900; letter-spacing:3px; text-transform:uppercase; color:#020208; background:linear-gradient(135deg,var(--nc),#00b4d8,var(--nm)); box-shadow:0 0 18px rgba(0,240,255,.35), 0 0 40px rgba(255,0,222,.12); transition:.25s; overflow:hidden; }
+.lg-btn:hover{ transform:translateY(-2px); letter-spacing:4px; background:linear-gradient(135deg,#5ffbff,#00b4d8,#ff5fe8); box-shadow:0 0 30px rgba(0,240,255,.55), 0 0 70px rgba(255,0,222,.2); }
+.lg-btn:active{ transform:scale(.97); }
+.lg-btn:disabled{ opacity:.45; cursor:not-allowed; transform:none; }
+.lg-msg{ min-height:17px; margin-top:12px; text-align:center; font-size:12px; letter-spacing:.5px; font-family:'Rajdhani',sans-serif; font-weight:600; }
+.lg-msg.err{ color:var(--na); text-shadow:0 0 10px rgba(255,174,0,.5); }
+.lg-msg.ok{ color:var(--nl); text-shadow:0 0 10px rgba(57,255,20,.5); }
+.lg-hint{ display:none; margin-top:10px; text-align:center; font-size:10.5px; color:#4a5165; letter-spacing:1px; }
+.lg-hint b{ color:#7a85a0; font-family:Consolas,monospace; }
+.lg-foot{ margin-top:16px; text-align:center; font-family:'Orbitron',monospace; font-size:7px; letter-spacing:3px; color:#3a4055; text-transform:uppercase; }
+.lg-shake{ animation:lgShake .4s ease; }
+@keyframes lgShake{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-9px); } 40%{ transform:translateX(9px); } 60%{ transform:translateX(-5px); } 80%{ transform:translateX(5px); } }
+
+/* userbar — info user + tombol logout */
+.userbar{ display:none; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; padding:9px 14px; background:var(--panel); border:1px solid rgba(0,240,255,.14); border-radius:12px; }
+.userbar.on{ display:flex; }
+.ub-info{ display:flex; align-items:center; gap:9px; min-width:0; }
+.ub-av{ width:26px; height:26px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; background:linear-gradient(135deg, rgba(0,240,255,.14), rgba(255,0,222,.14)); border:1px solid rgba(0,240,255,.3); box-shadow:0 0 10px rgba(0,240,255,.2); }
+.ub-name{ font-family:'Orbitron',monospace; font-size:11px; font-weight:700; color:var(--nc); text-shadow:0 0 10px rgba(0,240,255,.5); letter-spacing:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ub-role{ font-family:'Orbitron',monospace; font-size:8px; letter-spacing:2px; color:#5a6480; border:1px solid rgba(0,240,255,.18); border-radius:20px; padding:3px 9px; white-space:nowrap; }
+.ub-btn{ background:rgba(255,20,147,.06); color:var(--np); border:1px solid rgba(255,20,147,.3); border-radius:8px; padding:8px 16px; font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:.25s; flex-shrink:0; }
+.ub-btn:hover{ background:rgba(255,20,147,.15); color:#fff; box-shadow:0 0 14px rgba(255,20,147,.3); transform:translateY(-1px); }
+.ub-acts{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+#sndBtn{ background:rgba(0,240,255,.06); color:var(--nc); border-color:rgba(0,240,255,.3); }
+#sndBtn:hover{ background:rgba(0,240,255,.15); color:#fff; box-shadow:0 0 14px rgba(0,240,255,.35); }
+#sndBtn.snd-off{ opacity:.55; color:var(--np); border-color:rgba(255,20,147,.3); background:rgba(255,20,147,.06); }
+#sndBtn.snd-off:hover{ box-shadow:0 0 10px rgba(255,20,147,.25); }
+
+@media (max-width:700px){
+    .lg-inner{ padding:24px 18px 20px; }
+    .lg-title{ font-size:14px; letter-spacing:3px; }
+    .lg-btn{ font-size:11px; letter-spacing:2px; }
+    .userbar{ flex-wrap:wrap; }
+    .ub-role{ display:none; }
+}
+
+/* ================================================================
+   [G] DAFTAR AKUN & MANAJEMEN AKUN (KHUSUS ADMIN)
+================================================================ */
+.lg-tabs{ display:flex; gap:8px; margin-top:14px; background:rgba(2,2,8,.6); border:1px solid rgba(0,240,255,.1); border-radius:9px; padding:5px; position:relative; z-index:1; }
+.lg-tab{ flex:1; background:transparent; border:1px solid transparent; border-radius:6px; color:#5a6480; padding:9px 6px; font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:.2s; }
+.lg-tab:hover{ color:#9aa4c0; background:rgba(0,240,255,.04); box-shadow:none; transform:none; }
+.lg-tab.active{ color:var(--nc); border-color:var(--nc); background:linear-gradient(135deg, rgba(0,240,255,.12), rgba(255,0,222,.08)); box-shadow:0 0 12px rgba(0,240,255,.2); text-shadow:0 0 8px rgba(0,240,255,.5); }
+.lg-reg-only{ display:none; }
+#loginForm.regmode .lg-reg-only{ display:block; }
+#loginForm.regmode .lg-login-only{ display:none; }
+.tab-badge{ display:none; margin-left:6px; background:var(--nm); color:#fff; border-radius:20px; padding:1px 7px; font-size:9px; font-weight:900; box-shadow:0 0 8px rgba(255,0,222,.5); vertical-align:middle; }
+#tabAkun{ padding:6px 0 30px; }
+.ak-wrap{ display:flex; flex-direction:column; gap:16px; max-width:1100px; margin:0 auto; width:100%; }
+.ak-head{ text-align:center; padding:16px 14px 14px; background:linear-gradient(180deg, rgba(8,8,20,.96), rgba(3,3,10,.98)); border:1px solid rgba(0,240,255,.14); border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); position:relative; overflow:hidden; }
+.ak-head::after{ content:""; position:absolute; bottom:0; left:2%; right:2%; height:2px; background:linear-gradient(90deg, transparent, var(--nc), var(--nm), var(--nl), var(--na), var(--np), var(--nc), transparent); background-size:300% auto; animation:stF 2s linear infinite; }
+.ak-ic{ font-size:30px; display:inline-block; filter:drop-shadow(0 0 10px var(--nc)) drop-shadow(0 0 20px var(--nm)); animation:iH 4s ease-in-out infinite; }
+.ak-title{ font-family:'Orbitron',monospace; font-weight:900; font-size:15px; letter-spacing:4px; color:#e8f6ff; margin-top:6px; text-shadow:0 0 12px rgba(0,240,255,.5); }
+.ak-sub{ font-family:'Orbitron',monospace; font-size:8px; letter-spacing:2px; color:#5a6480; margin-top:6px; text-transform:uppercase; }
+.ak-sec{ background:var(--panel); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(0,240,255,.14); border-radius:14px; padding:16px 18px; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+.ak-sec-h{ display:flex; align-items:center; gap:8px; font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:var(--nc); text-transform:uppercase; margin-bottom:12px; text-shadow:0 0 10px rgba(0,240,255,.4); font-weight:700; }
+.ak-dot{ width:7px; height:7px; border-radius:50%; background:var(--na); box-shadow:0 0 8px var(--na); flex-shrink:0; }
+.ak-dot.ok{ background:var(--nl); box-shadow:0 0 8px var(--nl); }
+.ak-chip{ margin-left:auto; background:rgba(255,174,0,.12); border:1px solid var(--na); color:var(--na); border-radius:20px; padding:2px 10px; font-size:10px; font-weight:900; }
+.ak-chip.ok{ background:rgba(57,255,20,.08); border-color:var(--nl); color:var(--nl); }
+.ak-table{ width:100%; border-collapse:collapse; font-size:12px; }
+.ak-table th{ text-align:left; padding:10px 12px; font-family:'Orbitron',monospace; font-size:9px; letter-spacing:2px; color:var(--nc); border-bottom:1px solid rgba(0,240,255,.15); text-transform:uppercase; white-space:nowrap; }
+.ak-table td{ padding:10px 12px; border-bottom:1px solid rgba(0,240,255,.05); color:#aab2c8; vertical-align:middle; }
+.ak-table tbody tr{ transition:.2s; }
+.ak-table tbody tr:hover td{ background:rgba(0,240,255,.03); }
+.ak-user{ font-family:Consolas,monospace; color:#e8f6ff; font-weight:bold; letter-spacing:.5px; }
+.ak-time{ font-size:11px; color:#5a6480; white-space:nowrap; }
+.ak-empty{ text-align:center; color:#2a3045; padding:26px 10px !important; font-family:'Orbitron',monospace; font-size:10px; letter-spacing:3px; }
+.ak-role{ background:rgba(2,2,8,.8); border:1px solid rgba(0,240,255,.25); color:var(--nl); border-radius:6px; padding:6px 8px; font-family:Consolas,monospace; font-size:11px; outline:none; cursor:pointer; }
+.abtn{ border:1px solid; border-radius:7px; padding:7px 12px; font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; cursor:pointer; margin-right:6px; transition:.2s; background:transparent; color:inherit; }
+.abtn:hover{ transform:translateY(-1px); }
+.abtn-ok{ color:var(--nl); border-color:rgba(57,255,20,.4); }
+.abtn-ok:hover{ background:rgba(57,255,20,.12); box-shadow:0 0 12px rgba(57,255,20,.25); }
+.abtn-no{ color:var(--np); border-color:rgba(255,20,147,.35); margin-right:0; }
+.abtn-no:hover{ background:rgba(255,20,147,.12); box-shadow:0 0 12px rgba(255,20,147,.25); }
+.ak-note{ margin-top:10px; font-size:10px; color:#4a5165; letter-spacing:.5px; }
+@media (max-width:700px){
+    .ak-sec{ padding:12px; }
+    .ak-table th, .ak-table td{ padding:8px 6px; font-size:11px; }
+    .abtn{ padding:6px 8px; margin-right:4px; }
+    .ak-time{ white-space:normal; }
+}
+</style>
+</head>
+<body class="locked">
+
+    <!-- ===== LOGIN GATE ===== -->
+    <div id="loginGate">
+        <form class="lg-box" id="loginForm" autocomplete="off" onsubmit="return false;">
+            <div class="lg-inner">
+                <div class="lg-head">
+                    <span class="lg-icon">&#128274;</span>
+                    <div class="lg-title glitch" data-text="AKSES LOGIN">AKSES LOGIN</div>
+                    <div class="lg-sub">SC PINCANG XX BUNCIT &mdash; SISTEM TERKUNCI</div>
+                    <div class="lg-leds"><span class="led lc"></span><span class="led lm"></span><span class="led ll"></span><span class="led la"></span><span class="led lp"></span></div>
+                </div>
+                <div class="lg-tabs">
+                    <button type="button" class="lg-tab active" id="lgTabMasuk" onclick="lgSetMode('masuk')">&#9889; MASUK</button>
+                    <button type="button" class="lg-tab" id="lgTabDaftar" onclick="lgSetMode('daftar')">&#128221; DAFTAR</button>
+                </div>
+                <div class="lg-field">
+                    <label class="lg-label" for="lgUser">&#128100; USERNAME</label>
+                    <div class="lg-wrap"><input class="lg-input" type="text" id="lgUser" placeholder="masukkan username..." autocomplete="off" spellcheck="false"></div>
+                </div>
+                <div class="lg-field">
+                    <label class="lg-label" for="lgPass">&#128273; PASSWORD</label>
+                    <div class="lg-wrap">
+                        <input class="lg-input" type="password" id="lgPass" placeholder="masukkan password..." autocomplete="off">
+                        <button type="button" class="lg-eye" id="lgEye" onclick="toggleLgPass()" title="Tampil / sembunyikan password">&#128065;</button>
+                    </div>
+                </div>
+                <div class="lg-field lg-reg-only">
+                    <label class="lg-label" for="lgPass2">&#128273; ULANGI PASSWORD</label>
+                    <div class="lg-wrap"><input class="lg-input" type="password" id="lgPass2" placeholder="ulangi password yang sama..." autocomplete="off"></div>
+                </div>
+                <div class="lg-row lg-login-only">
+                    <label class="lg-remember"><input type="checkbox" id="lgRemember"> INGAT SAYA</label>
+                    <span id="lgClock">--:--:--</span>
+                </div>
+                <button type="button" class="lg-btn" id="lgBtn" onclick="lgSubmit()">&#9889; MASUK</button>
+                <div class="lg-msg" id="lgMsg"></div>
+                <div class="lg-hint" id="lgHint"></div>
+                <div class="lg-foot">&#9670; BLACK GOLD PWR SYSTEM &#9670; SECURE ACCESS</div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ===== LATAR NEON (global) ===== -->
+    <div class="wallpaper"><img src="https://togelon.com/asset/togel-on-com-image-model.png"></div>
+    <div class="nebula"></div><div class="aurora"></div><div class="matrix" id="matrix"></div><div class="road-wrap" id="roadWrap"><div class="road"></div></div><div class="fog"></div><div class="ltng" id="ltng"></div><div class="embers" id="embers"></div>
+
+    <div class="content">
+
+        <!-- ===== USER BAR (tampil setelah login) ===== -->
+        <div class="userbar" id="userbar">
+            <div class="ub-info">
+                <span class="ub-av">&#128100;</span>
+                <span class="ub-name" id="ubName">&mdash;</span>
+                <span class="ub-role" id="ubRole">&mdash;</span>
+            </div>
+            <div class="ub-acts">
+                <button type="button" class="ub-btn" id="sndBtn" onclick="sndToggle()">&#128266; SUARA</button>
+                <button type="button" class="ub-btn" onclick="doLogout()">&#9211; LOGOUT</button>
+            </div>
+        </div>
+
+        <!-- ===== TAB BAR ===== -->
+        <div class="tabbar">
+            <button class="tab-btn active" onclick="showTab('tab1', this)">&#9851; SC DEPO BCA</button>
+            <button class="tab-btn tgold" onclick="showTab('tab2', this)">&#9889; WD ALL BANK</button>
+            <button class="tab-btn tgold" onclick="showTab('tab3', this)">&#9878; WD REPORT</button>
+            <button class="tab-btn" id="tabBtnAkun" onclick="showTab('tabAkun', this)" style="display:none">&#128737; AKUN <span class="tab-badge" id="akunBadge">0</span></button>
+        </div>
+
+        <!-- ===== TAB 1 : SC DEPO BCA ===== -->
+        <div id="tab1" class="tab-panel active">
+            <div class="hdr"><div class="nf"><div class="hdr-c"><span class="hicon">&#9851;</span><h1 class="glitch" data-text="Dashboard Rekening" style="font-size:clamp(14px,3vw,24px)">13/08</h1><div class="leds"><span class="led lc"></span><span class="led lm"></span><span class="led ll"></span><span class="led la"></span><span class="led lp"></span></div></div><div class="viz" id="viz"></div><div class="instrs"><div class="mg mgc"><div class="mgr"><span class="mgv">88</span></div><span class="mglb">Speed</span></div><div class="mg mga"><div class="mgr"><span class="mgv">4.2</span></div><span class="mglb">RPM</span></div><div class="mg mgl"><div class="mgr"><span class="mgv">72</span></div><span class="mglb">Temp</span></div><div class="mg mgp"><div class="mgr"><span class="mgv">F</span></div><span class="mglb">Fuel</span></div></div></div></div>
+            <div class="isec"><div class="nf"><div class="nfi"><label class="ilbl" for="rawInput"><span class="led lc" style="width:5px;height:5px"></span>Input Data Mutasi</label><textarea id="rawInput" placeholder="Paste teks mutasi BCA di sini..."></textarea><div class="brow">
+            <button class="bgo" onclick="processCleanData()">&#9654; Proses Data</button>
+            <button class="bcopy" onclick="copyCleanData()">&#128203; Copy Hasil</button>
+            <button class="bcl" onclick="clearAllData()">&#10005; Bersihkan</button>
+            </div><div id="status" class="status"></div></div></div></div>
+            <div class="gsec" id="gsec" style="display:none"><div class="nf"><div class="gpanel"><div class="g gc"><div class="gr"><div class="gdk"></div><div class="gtkw" id="tkC"></div><div class="gn"></div><div class="gdt"></div></div><span class="gv" id="totalCount">0</span><span class="glb">Transaksi</span></div><div class="g ga"><div class="gr"><div class="gdk"></div><div class="gtkw" id="tkA"></div><div class="gn"></div><div class="gdt"></div></div><span class="gv" id="totalNominal" style="font-size:13px">0</span><span class="glb">Total Nominal</span></div></div></div></div>
+            <div class="tsec"><div class="nf"><div class="tc"><div class="tstrip"></div><table><thead><tr><th>NAMA REKENING</th><th>NOMINAL</th></tr></thead><tbody id="cleanResultBody"><tr class="erow"><td colspan="2">Belum ada data</td></tr></tbody></table></div></div></div>
+        </div>
+
+        <!-- ===== TAB 2 : KACAU (PENDING) ===== -->
+        <div id="tab2" class="tab-panel gold">
+            <div class="g-grid"></div>
+            <div class="g-portal"></div>
+            <div class="container">
+
+                <div class="neon-title">
+                   
+                </div>
+
+                <div class="card">
+                    <div class="section-header">
+                        <i data-lucide="radio" size="15" style="color:#ffd54a"></i>
+                        TEMPEL DATA DISINI YA BOSKU
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea id="dataInput" oninput="parseExcelData()" placeholder="Tempel data transaksi pending di sini..."></textarea>
+                        <div class="action-btns">
+                            <button class="action-btn" onclick="pasteText()">
+                                <i data-lucide="clipboard" size="14"></i>
+                                PASTE
+                            </button>
+                            <button class="action-btn hasil-btn" onclick="copyHasil(this)">
+                                <i data-lucide="zap" size="14"></i>
+                                HASIL
+                            </button>
+                            <button class="action-btn" onclick="clearAll()">
+                                <i data-lucide="trash-2" size="14"></i>
+                                CLEAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:rgba(255,193,7,.08);color:#ffd54a;">
+                            <i data-lucide="activity" size="23"></i>
+                        </div>
+                        <div class="stat-text">
+                            <div class="stat-value" id="pendingCount">0</div>
+                            <div class="stat-label">Pending Records</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:rgba(77,255,154,.08);color:#4dff9a;">
+                            <i data-lucide="wallet" size="23"></i>
+                        </div>
+                        <div class="stat-text">
+                            <div class="stat-value" id="totalAmount">Rp 0</div>
+                            <div class="stat-label">Total Nominal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="table-header-bar">
+                        <div class="section-header" style="margin-bottom:0;">
+                            <i data-lucide="database" size="16"></i>
+                            HASIL DATA
+                        </div>
+                        <div class="table-actions">
+                            <button class="table-action-btn" onclick="copyHasil(this)">
+                                <i data-lucide="copy" size="13"></i>
+                                COPY HASIL
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Bank</th>
+                                    <th>No/Status</th>
+                                    <th>Member Code</th>
+                                    <th>Nama Rek</th>
+                                    <th style="text-align:right">Nominal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td colspan="5" class="empty-row">
+                                        ⟡ DATA KOSONG ⟡
+                                        <br>
+                                        Tempel data transaksi
+                                        untuk memulai sistem.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    ◈ BLACK GOLD PWR SYSTEM ◈
+                    <span>ONLINE</span>
+                    ◈ SECURED ◈
+                </div>
+
+            </div>
+
+            <div id="toast" class="toast">✓ Hasil berhasil di-copy!</div>
+        </div>
+
+        <!-- ===== TAB 3 : WD PROCESSOR ===== -->
+        <div id="tab3" class="tab-panel gold">
+            <div class="g-grid"></div>
+            <div class="g-portal"></div>
+            <div class="container">
+
+                <div class="neon-title">
+                 
+            
+
+                <div class="card">
+                    <div class="section-header">
+                        <i data-lucide="radio" size="15" style="color:#ffd54a"></i>
+                        TEMPEL DATA WITHDRAW DISINI
+                    </div>
+
+                    <div class="textarea-wrapper">
+                        <textarea id="wdInput" oninput="parseWdData()" placeholder="Tempel data withdraw di sini..."></textarea>
+
+                        <div class="action-btns">
+                            <button class="action-btn" onclick="pasteWdText()">
+                                <i data-lucide="clipboard" size="14"></i>
+                                PASTE
+                            </button>
+                            <button class="action-btn hasil-btn" onclick="copyWdHasil(this)">
+                                <i data-lucide="zap" size="14"></i>
+                                HASIL
+                            </button>
+                            <button class="action-btn" onclick="clearWdAll()">
+                                <i data-lucide="trash-2" size="14"></i>
+                                CLEAR
+                            </button>
+                        </div>
+                    </div>
+
+                    <label class="prefix-toggle">
+                        <input type="checkbox" id="prefixToggle" checked onchange="renderWdTable()">
+                        <span>TAMBAH PREFIX E-WALLET &nbsp;<b>DANA 3901 / GOPAY 70001 / OVO 39358 / LINKAJA 09110</b></span>
+                    </label>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:rgba(255,193,7,.08);color:#ffd54a;">
+                            <i data-lucide="activity" size="23"></i>
+                        </div>
+                        <div class="stat-text">
+                            <div class="stat-value" id="wdCount">0</div>
+                            <div class="stat-label">Total Transaksi</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:rgba(77,255,154,.08);color:#4dff9a;">
+                            <i data-lucide="wallet" size="23"></i>
+                        </div>
+                        <div class="stat-text">
+                            <div class="stat-value" id="wdTotal">Rp 0</div>
+                            <div class="stat-label">Total Nominal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="table-header-bar">
+                        <div class="section-header" style="margin-bottom:0;">
+                            <i data-lucide="database" size="16"></i>
+                            HASIL DATA
+                        </div>
+                        <div class="table-actions">
+                            <button class="table-action-btn" onclick="copyWdHasil(this)">
+                                <i data-lucide="copy" size="13"></i>
+                                COPY HASIL
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Bank</th>
+                                    <th>No Rek</th>
+                                    <th>User ID</th>
+                                    <th>Nama Rek</th>
+                                    <th style="text-align:right">Nominal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wdTableBody">
+                                <tr>
+                                    <td colspan="5" class="empty-row">
+                                        ⟡ DATA KOSONG ⟡<br>
+                                        Tempel data withdraw untuk memulai.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    ◈ BLACK GOLD PWR SYSTEM ◈
+                    <span>ONLINE</span>
+                    ◈ SECURED ◈
+                </div>
+
+            </div>
+
+            <div id="wdToast" class="toast">✓ Hasil berhasil di-copy!</div>
+        </div>
+
+    </div>
+
+    <!-- ===== TAB 4 : MANAJEMEN AKUN (KHUSUS ADMIN) ===== -->
+    <div id="tabAkun" class="tab-panel">
+        <div class="ak-wrap">
+            <div class="ak-head">
+                <span class="ak-ic">&#128736;</span>
+                <div class="ak-title glitch" data-text="MANAJEMEN AKUN">MANAJEMEN AKUN</div>
+                <div class="ak-sub">PENGAJUAN PENDAFTARAN &amp; AKUN TERDAFTAR &mdash; KHUSUS ADMIN</div>
+            </div>
+
+            <div class="ak-sec">
+                <div class="ak-sec-h">
+                    <span class="ak-dot"></span> PENGAJUAN BARU &mdash; MENUNGGU PERSETUJUAN ANDA
+                    <span class="ak-chip" id="akunPendingCount">0</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="ak-table">
+                        <thead><tr><th style="width:36px">NO</th><th>USERNAME</th><th>WAKTU DAFTAR</th><th style="width:110px">ROLE</th><th style="width:200px">AKSI</th></tr></thead>
+                        <tbody id="akunPendingBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ak-sec">
+                <div class="ak-sec-h">
+                    <span class="ak-dot ok"></span> AKUN TERDAFTAR (HASIL PERSETUJUAN)
+                    <span class="ak-chip ok" id="akunRegCount">0</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="ak-table">
+                        <thead><tr><th style="width:36px">NO</th><th>USERNAME</th><th style="width:110px">ROLE</th><th>DITETAPKAN</th><th style="width:110px">AKSI</th></tr></thead>
+                        <tbody id="akunRegBody"></tbody>
+                    </table>
+                </div>
+                <div class="ak-note">Akun bawaan (admin / operator) dikonfigurasi langsung di kode &mdash; lihat AKUN_LOGIN pada SCRIPT 4. Akun yang dihapus di atas tidak akan bisa login lagi.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Modal Tab 1 ===== -->
+    <div id="copyModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="modal-title">SALIN MANUAL</h3>
+            <p class="modal-desc">Browser memblokir salin otomatis. Tekan tombol "Salin Teks" di bawah ini atau blok teks lalu tekan Ctrl+C.</p>
+            <textarea id="manualCopyText" class="modal-textarea" readonly></textarea>
+            <div class="modal-btns">
+                <button id="manualCopyBtn" class="modal-btn modal-btn-copy">Salin Teks</button>
+                <button onclick="document.getElementById('copyModal').style.display='none'" class="modal-btn modal-btn-close">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+/* ================================================================
+   SCRIPT 1 — SC DEPO BCA
+   DI-SALIN PERSIS DARI FILE ASLI ANDA. TIDAK ADA YANG DIUBAH.
+================================================================ */
+(function(){const m=document.getElementById("matrix");for(let i=0;i<16;i++){const c=document.createElement("div");c.className="mcol";c.style.left=(i/16*100)+"%";let s="";for(let j=0;j<50;j++)s+=String.fromCharCode(0x30A0+Math.random()*96);c.textContent=s;c.style.animationDuration=(8+Math.random()*12)+"s";c.style.animationDelay=Math.random()*8+"s";m.appendChild(c)}})();
+(function(){const r=document.getElementById("roadWrap");const co=["var(--nc)","var(--nm)","var(--na)"];for(let i=0;i<6;i++){const l=document.createElement("div");l.className="spdln";l.style.top=(50+Math.random()*40)+"%";l.style.width=(80+Math.random()*180)+"px";l.style.background="linear-gradient(90deg,transparent,"+co[i%3]+",transparent)";l.style.opacity=0.05+Math.random()*0.05;l.style.animationDuration=(1.5+Math.random()*2)+"s";l.style.animationDelay=Math.random()*4+"s";r.appendChild(l)}})();
+(function(){const e=document.getElementById("embers");const co=["#00f0ff","#ff00de","#39ff14","#ffae00","#ff1493"];for(let i=0;i<28;i++){const p=document.createElement("div");p.className="embr";p.style.left=Math.random()*100+"%";p.style.bottom="-5px";const sz=1+Math.random()*2.5;p.style.width=p.style.height=sz+"px";const c=co[Math.floor(Math.random()*5)];p.style.background=c;p.style.boxShadow="0 0 6px "+c;p.style.animationDuration=(10+Math.random()*14)+"s";p.style.animationDelay=Math.random()*12+"s";e.appendChild(p)}})();
+(function(){const l=document.getElementById("ltng");setInterval(function(){if(Math.random()<0.1){l.classList.add("on");setTimeout(function(){l.classList.remove("on")},80)}},3500)})();
+(function(){const v=document.getElementById("viz");const co=["var(--nc)","var(--nm)","var(--nl)","var(--na)","var(--np)"];for(let i=0;i<45;i++){const b=document.createElement("div");b.className="vb";b.style.background=co[Math.floor(i/9)%5];b.style.boxShadow="0 0 3px "+co[Math.floor(i/9)%5];b.style.animationDuration=(0.25+Math.random()*0.45)+"s";b.style.animationDelay=(i*0.03)+"s";v.appendChild(b)}})();
+(function(){["tkC","tkA"].forEach(function(id){const el=document.getElementById(id);if(!el)return;for(let i=0;i<14;i++){const t=document.createElement("div");t.className="gtk";t.style.transform="rotate("+(i*25.7)+"deg)";el.appendChild(t)}})})();
+
+function formatNominal(n){const v=Number(n);if(!Number.isFinite(v))return"0";return Math.round(v).toLocaleString("en-US")}
+function parseNom(s){s=String(s).replace(/,/g,"");const v=parseFloat(s);if(isNaN(v)||v<=0)return null;return v}
+
+function isValidNameLine(ln) {
+    if (!ln || ln.length < 2) return false;
+    if (/^[0-9,.]+$/.test(ln)) return false;
+    if (/^\d{10,}$/.test(ln)) return false;
+    if (/^\d{4}\/[A-Z]/i.test(ln)) return false;
+    if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(ln)) return false;
+    if (/^\d{2}\/\d{2}\s/i.test(ln)) return false;
+    if (/^0000$/i.test(ln) || /^PEND$/i.test(ln) || /^HARI\s*INI$/i.test(ln)) return false;
+    if (/^(BI-FAST|TRSF|SWITCHING|ESPAY|TRANSFER|BIAYA|CR|DB)/i.test(ln) && !/TRANSFER DR/i.test(ln)) return false;
+    if (/^ID[0-9A-Z]{10,}$/i.test(ln)) return false;
+    if (/^MASIH\s+ADA/i.test(ln)) return false;
+    if (/^SETORAN\s+VIA/i.test(ln)) return false;
+    return true;
+}
+
+function extractNameFromLine(ln) {
+    if (/^TRFDN[-\s]/i.test(ln)) {
+        const cl = ln.replace(/^TRFDN[-\s]*/i, "");
+        if (cl.length > 1 && /[a-zA-Z]/.test(cl)) return cl;
+    }
+    if (/TANGGAL\s*:\s*\d/i.test(ln)) {
+        let m = ln.match(/WSID:\S+\s+(.+)/i);
+        if (m) return m[1].trim();
+    }
+    if (/[a-zA-Z]/.test(ln)) return ln;
+    return null;
+}
+
+function processCleanData(){
+    const raw = document.getElementById("rawInput").value.trim();
+    const rb = document.getElementById("cleanResultBody");
+    const st = document.getElementById("status");
+    const gs = document.getElementById("gsec");
+    const tc = document.getElementById("totalCount");
+    const tn = document.getElementById("totalNominal");
+
+    rb.innerHTML = ""; st.textContent = ""; st.className = "status"; gs.style.display = "none";
+    if(!raw){
+        rb.innerHTML = '<tr class="erow"><td colspan="2">Tidak ada data</td></tr>';
+        st.textContent = "Silakan paste data terlebih dahulu.";
+        st.classList.add("err");
+        return;
+    }
+
+    const lines = raw.split(/\r?\n/);
+    const trimmed = [];
+    for(let k = 0; k < lines.length; k++){
+        const tl = lines[k].trim();
+        if(tl) trimmed.push(tl);
+    }
+
+    const results = [];
+
+    function addResult(name, nom){
+        if(!name || nom === null || nom <= 0) return;
+        results.push({ name: name, nominal: nom });
+    }
+
+    // LOOP GABUNGAN TUNGGAL
+    // Menghapus fitur anti-duplikat sehingga semua transaksi dengan nominal sama tetap terbaca semua.
+    for(let i = 0; i < trimmed.length; i++){
+        if(!/^CR$/i.test(trimmed[i])) continue;
+        if(i < 1) continue;
+
+        const nom = parseNom(trimmed[i-1]);
+        if(nom === null) continue;
+
+        let name = null;
+
+        let gopayId = null;
+        let isGoPay = false;
+        for(let j = i - 1; j >= Math.max(0, i - 10); j--){
+            const ln = trimmed[j];
+            if(/^ID[0-9A-Z]{10,}$/i.test(ln)){
+                gopayId = ln.trim();
+            }
+            if(/GOPAY|DOMPET\s+ANAK\s+BANGSA/i.test(ln)){
+                isGoPay = true;
+            }
+        }
+
+        if(gopayId && isGoPay){
+            name = gopayId;
+        }
+
+        if(!name){
+            for(let j = i - 1; j >= Math.max(0, i - 10); j--){
+                const m = trimmed[j].match(/TRANSFER\s+DR\s+\d+\s+(.+)/i);
+                if(m){ name = m[1].trim(); break; }
+            }
+        }
+
+        if(!name){
+            let zeroLine = -1;
+            for(let j = i - 1; j >= Math.max(0, i - 10); j--){
+                if(/^0000$/i.test(trimmed[j])){ zeroLine = j; break; }
+                if(/^0998$/i.test(trimmed[j])){ zeroLine = j; break; }
+            }
+
+            if(zeroLine !== -1){
+                const cands = [];
+                for(let j = zeroLine - 1; j >= Math.max(0, zeroLine - 8); j--){
+                    const ln = trimmed[j];
+                    if(!isValidNameLine(ln)) continue;
+                    const extracted = extractNameFromLine(ln);
+                    if(extracted) cands.push(extracted);
+                }
+                if(cands.length > 0){ name = cands[0]; }
+            }
+        }
+
+        if(!name){
+            const cands = [];
+            for(let j = i - 2; j >= Math.max(0, i - 8); j--){
+                const ln = trimmed[j];
+                if(!isValidNameLine(ln)) continue;
+                const extracted = extractNameFromLine(ln);
+                if(extracted) cands.push(extracted);
+            }
+            if(cands.length > 0){ name = cands[0]; }
+        }
+
+        addResult(name, nom);
+    }
+
+    if(results.length === 0){
+        rb.innerHTML = '<tr class="erow"><td colspan="2">Tidak ada transaksi masuk yang terbaca</td></tr>';
+        st.textContent = "Data tidak berhasil dibaca.";
+        st.classList.add("err");
+        return;
+    }
+
+    let ta = 0;
+    for(let i = 0; i < results.length; i++){
+        const tr = document.createElement("tr");
+        const d1 = document.createElement("td"); d1.textContent = results[i].name;
+        const d2 = document.createElement("td"); d2.textContent = formatNominal(results[i].nominal);
+        tr.appendChild(d1); tr.appendChild(d2);
+        rb.appendChild(tr);
+        ta += results[i].nominal;
+    }
+
+    gs.style.display = "block";
+    tc.textContent = results.length;
+    tn.textContent = "Rp " + formatNominal(ta);
+    st.textContent = "Berhasil membaca " + results.length + " transaksi masuk.";
+    st.classList.add("ok");
+
+    const l = document.getElementById("ltng");
+    l.classList.add("on"); setTimeout(function(){ l.classList.remove("on"); }, 90);
+    setTimeout(function(){ l.classList.add("on"); setTimeout(function(){ l.classList.remove("on"); }, 70); }, 180);
+}
+
+async function copyCleanData() {
+    const rows = document.querySelectorAll("#cleanResultBody tr:not(.erow)");
+    const btn = document.querySelector(".bcopy");
+    const st = document.getElementById("status");
+
+    if (!rows.length) {
+        st.textContent = "Tidak ada data untuk disalin.";
+        st.className = "status err";
+        return;
+    }
+
+    const textArr = [];
+    rows.forEach(function(row) {
+        const cols = row.querySelectorAll("td");
+        if (cols.length >= 2) {
+            textArr.push(cols[0].textContent.trim() + "\t" + cols[1].textContent.trim());
+        }
+    });
+
+    const textToCopy = textArr.join("\n");
+    let copied = false;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+            copied = true;
+        } catch (e) {
+            // Lanjut ke fallback
+        }
+    }
+
+    if (!copied) {
+        try {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            textArea.style.position = "fixed";
+            textArea.style.top = "-9999px";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textArea);
+            if (successful) copied = true;
+        } catch (err) {
+            // Lanjut ke modal manual
+        }
+    }
+
+    if (!copied) {
+        document.getElementById("manualCopyText").value = textToCopy;
+        document.getElementById("copyModal").style.display = "flex";
+        document.getElementById("manualCopyText").select();
+        st.textContent = "Salin manual melalui kotak dialog yang muncul.";
+        st.className = "status err";
+        return;
+    }
+
+    btn.classList.add("copied");
+    const oldText = btn.innerHTML;
+    btn.innerHTML = "&#10003; Copied!";
+    st.textContent = "Berhasil menyalin data ke clipboard!";
+    st.className = "status ok";
+    setTimeout(function() {
+        btn.classList.remove("copied");
+        btn.innerHTML = oldText;
+    }, 2000);
+}
+
+document.getElementById("manualCopyBtn").onclick = function() {
+    const t = document.getElementById("manualCopyText");
+    t.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    this.innerText = "Tersalin!";
+    setTimeout(() => { this.innerText = "Salin Teks"; }, 2000);
+};
+
+function clearAllData(){
+    document.getElementById("rawInput").value = "";
+    document.getElementById("cleanResultBody").innerHTML = '<tr class="erow"><td colspan="2">Belum ada data</td></tr>';
+    document.getElementById("gsec").style.display = "none";
+    const st = document.getElementById("status");
+    st.textContent = "";
+    st.className = "status";
+}
+</script>
+
+<script>
+/* ================================================================
+   SCRIPT 2 — KACAU / PENDING
+   DI-SALIN PERSIS DARI FILE ASLI ANDA. TIDAK ADA YANG DIUBAH.
+   (applyEwalletPrefix & escapeHTML di sini juga dipakai bersama
+    oleh Script 3 / WD PROCESSOR karena isinya identik)
+================================================================ */
+
+let parsedList = [];
+
+
+/* =========================================
+   E-WALLET PREFIX
+========================================= */
+
+function applyEwalletPrefix(bank,noRek){
+
+    if(
+        noRek === '-' ||
+        noRek.includes('*')
+    ){
+        return noRek;
+    }
+
+    let upperBank =
+        bank.toUpperCase();
+
+    let finalNoRek =
+        noRek;
+
+
+    if(
+        upperBank === 'DANA' ||
+        upperBank === 'DANA2'
+    ){
+
+        if(
+            !finalNoRek.startsWith('3901')
+        ){
+
+            finalNoRek =
+                '3901' + finalNoRek;
+
+        }
+
+    }
+
+    else if(
+        upperBank === 'GOPAY'
+    ){
+
+        if(
+            !finalNoRek.startsWith('70001')
+        ){
+
+            finalNoRek =
+                '70001' + finalNoRek;
+
+        }
+
+    }
+
+    else if(
+        upperBank === 'OVO'
+    ){
+
+        if(
+            !finalNoRek.startsWith('39358')
+        ){
+
+            finalNoRek =
+                '39358' + finalNoRek;
+
+        }
+
+    }
+
+    else if(
+        upperBank === 'LINKAJA'
+    ){
+
+        if(
+            !finalNoRek.startsWith('09110')
+        ){
+
+            finalNoRek =
+                '09110' + finalNoRek;
+
+        }
+
+    }
+
+    return finalNoRek;
+}
+
+
+/* =========================================
+   CLEAN NAMA
+========================================= */
+
+function cleanNama(text){
+
+    return text
+
+        .replace(
+            /\b(REVIEW|Erroroor|SOG|SYSTEM|null|APPROVED|REJECTED|PENDING|PROCESS)\b/gi,
+            ''
+        )
+
+        .replace(
+            /[_-]+/g,
+            ' '
+        )
+
+        .replace(
+            /\s+/g,
+            ' '
+        )
+
+        .trim();
+}
+
+
+/* =========================================
+   PARSER
+========================================= */
+
+function parseExcelData(){
+
+    const rawText =
+        document
+        .getElementById('dataInput')
+        .value
+        .trim();
+
+
+    if(!rawText){
+
+        parsedList = [];
+
+        renderTable();
+
+        return;
+    }
+
+
+    const lines =
+        rawText.split(/\r?\n/);
+
+
+    parsedList = [];
+
+
+    lines.forEach(line => {
+
+        let cleanLine =
+            line.trim();
+
+
+        if(!cleanLine){
+            return;
+        }
+
+
+        let cols =
+            cleanLine
+            .split('\t')
+            .map(c => c.trim());
+
+
+        while(
+            cols.length &&
+            cols[0] === ''
+        ){
+            cols.shift();
+        }
+
+
+        while(
+            cols.length &&
+            cols[cols.length - 1] === ''
+        ){
+            cols.pop();
+        }
+
+
+        let memberCode = '-';
+
+        let noRek = '-';
+
+        let nama = '-';
+
+        let bank = '-';
+
+        let nominal = '0';
+
+
+        /* HEADER */
+
+        if(
+            cols[0] &&
+            (
+                cols[0].toUpperCase() ===
+                'STATUS'
+
+                ||
+
+                cols[0].toUpperCase() ===
+                'MEMBER CODE'
+            )
+        ){
+
+            return;
+        }
+
+
+        /* FORMAT TAB / EXCEL */
+
+        if(
+            cols.length >= 7 &&
+            /^(PENDING|PROCESS|APPROVED|REJECTED|REVIEW)$/i
+            .test(cols[0])
+        ){
+
+            memberCode =
+                cols[1] || '-';
+
+            noRek =
+                cols[2] || '-';
+
+            nama =
+                cleanNama(
+                    cols[3] || '-'
+                );
+
+            nominal =
+                cols[4] || '0';
+
+            bank =
+                cols[6] || '-';
+
+        }
+
+        /* FORMAT TEXT */
+
+        else{
+
+            let bankMatch =
+                cleanLine.match(
+                    /\b(BCA|BRI|BNI|MANDIRI|DANA2|DANA|OVO|LINKAJA|GOPAY|CIMB|PERMATA|SEABANK)\b/i
+                );
+
+
+            bank =
+                bankMatch
+                ? bankMatch[0].toUpperCase()
+                : '-';
+
+
+            let nominalMatch =
+                cleanLine.match(
+                    /\b\d{1,3}(?:,\d{3})+(?:\.\d{2})?\b/
+                )
+
+                ||
+
+                cleanLine.match(
+                    /\b\d{1,3}(?:[.,]\d{3})+\b/
+                );
+
+
+            if(nominalMatch){
+
+                nominal =
+                    nominalMatch[0];
+
+            }
+
+
+            let noRekMatch =
+                cleanLine.match(
+                    /\b[\d*]{3,20}\b/g
+                );
+
+
+            if(noRekMatch){
+
+                noRek =
+                    noRekMatch.sort(
+                        (a,b) =>
+                            b.replace(/\*/g,'').length -
+                            a.replace(/\*/g,'').length
+                    )[0];
+
+            }
+
+
+            let textClean =
+                cleanLine;
+
+
+            if(bank !== '-'){
+
+                textClean =
+                    textClean.replace(
+                        new RegExp(bank,'gi'),
+                        ''
+                    );
+
+            }
+
+
+            if(nominal !== '0'){
+
+                textClean =
+                    textClean.replace(
+                        nominal,
+                        ''
+                    );
+
+            }
+
+
+            if(noRek !== '-'){
+
+                textClean =
+                    textClean.replace(
+                        noRek,
+                        ' '
+                    );
+
+            }
+
+
+            textClean =
+                textClean
+
+                .replace(
+                    /\b(PROCESS|PENDING|APPROVED|REJECTED|REVIEW|null|SYSTEM|id_\d+)\b/gi,
+                    ''
+                )
+
+                .replace(
+                    /\b\d{2}\/\d{2}\/\d{4}\s\d{2}:\d{2}:\d{2}\b/g,
+                    ''
+                )
+
+                .replace(
+                    /[.,]/g,
+                    ''
+                )
+
+                .trim();
+
+
+            let parts =
+                textClean
+                .split(/\s+/)
+                .filter(Boolean);
+
+
+            if(parts.length){
+
+                memberCode =
+                    parts[0];
+
+
+                if(parts.length > 1){
+
+                    nama =
+                        cleanNama(
+                            parts
+                            .slice(1)
+                            .join(' ')
+                        );
+
+                }
+
+            }
+
+        }
+
+
+        if(
+            memberCode !== '-' &&
+            bank !== '-'
+        ){
+
+            parsedList.push({
+
+                memberCode,
+
+                bank,
+
+                noRek:
+                    applyEwalletPrefix(
+                        bank,
+                        noRek
+                    ),
+
+                nama,
+
+                nominal
+
+            });
+
+        }
+
+    });
+
+
+    renderTable();
+
+}
+
+
+/* =========================================
+   RENDER TABLE
+========================================= */
+
+function renderTable(){
+
+    const tbody =
+        document.getElementById(
+            'table-body'
+        );
+
+
+    tbody.innerHTML = '';
+
+
+    if(!parsedList.length){
+
+        tbody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="5"
+                class="empty-row"
+            >
+
+                ⟡ DATA KOSONG ⟡
+
+                <br>
+
+                Tempel data transaksi
+                untuk memulai sistem.
+
+            </td>
+
+        </tr>
+
+        `;
+
+
+        document
+        .getElementById('pendingCount')
+        .innerText = '0';
+
+
+        document
+        .getElementById('totalAmount')
+        .innerText = 'Rp 0';
+
+
+        lucide.createIcons();
+
+        return;
+    }
+
+
+    let totalNominalSum = 0;
+
+
+    parsedList.forEach(item => {
+
+        let cleanNominal =
+            item.nominal
+
+            .replace(
+                /Rp\s?/gi,
+                ''
+            )
+
+            .replace(
+                /\.\d{2}$/,
+                ''
+            )
+
+            .replace(
+                /[.,]/g,
+                ''
+            );
+
+
+        const numericNominal =
+            parseInt(cleanNominal) || 0;
+
+
+        totalNominalSum +=
+            numericNominal;
+
+
+        let bankClass =
+            'bank-default';
+
+
+        if(
+            item.bank.includes('BRI')
+        ){
+
+            bankClass =
+                'bank-bri';
+
+        }
+
+        else if(
+            item.bank.includes('BCA')
+        ){
+
+            bankClass =
+                'bank-bca';
+
+        }
+
+        else if(
+            item.bank.includes('BNI')
+        ){
+
+            bankClass =
+                'bank-bni';
+
+        }
+
+        else if(
+            item.bank.includes('MANDIRI')
+        ){
+
+            bankClass =
+                'bank-mandiri';
+
+        }
+
+        else if(
+            item.bank.includes('DANA')
+        ){
+
+            bankClass =
+                'bank-dana';
+
+        }
+
+        else if(
+            item.bank.includes('OVO')
+        ){
+
+            bankClass =
+                'bank-ovo';
+
+        }
+
+        else if(
+            item.bank.includes('LINKAJA')
+        ){
+
+            bankClass =
+                'bank-linkaja';
+
+        }
+
+        else if(
+            item.bank.includes('GOPAY')
+        ){
+
+            bankClass =
+                'bank-gopay';
+
+        }
+
+        else if(
+            item.bank.includes('SEABANK')
+        ){
+
+            bankClass =
+                'bank-seabank';
+
+        }
+
+
+        const tr =
+            document.createElement('tr');
+
+
+        tr.innerHTML = `
+
+            <td>
+
+                <span
+                    class="bank-badge ${bankClass}"
+                >
+
+                    ${escapeHTML(item.bank)}
+
+                </span>
+
+            </td>
+
+
+            <td
+                style="
+                    font-family:monospace;
+                    letter-spacing:.5px
+                "
+            >
+
+                ${escapeHTML(item.noRek)}
+
+            </td>
+
+
+            <td
+                style="
+                    color:#ffd54a;
+                    font-weight:750;
+                    text-shadow:
+                    0 0 7px
+                    rgba(255,193,7,.35)
+                "
+            >
+
+                ${escapeHTML(item.memberCode)}
+
+            </td>
+
+
+            <td
+                style="
+                    text-transform:capitalize
+                "
+            >
+
+                ${escapeHTML(
+                    item.nama.toLowerCase()
+                )}
+
+            </td>
+
+
+            <td
+                style="
+                    text-align:right;
+                    font-weight:950;
+                    color:#fff4bf;
+                    text-shadow:
+                    0 0 7px
+                    rgba(255,193,7,.22)
+                "
+            >
+
+                ${numericNominal.toLocaleString('en-US')}
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(tr);
+
+    });
+
+
+    document
+    .getElementById('pendingCount')
+    .innerText =
+        parsedList.length;
+
+
+    document
+    .getElementById('totalAmount')
+    .innerText =
+        'Rp ' +
+        totalNominalSum.toLocaleString('en-US');
+
+
+    lucide.createIcons();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            '&amp;'
+        )
+
+        .replace(
+            /</g,
+            '&lt;'
+        )
+
+        .replace(
+            />/g,
+            '&gt;'
+        )
+
+        .replace(
+            /"/g,
+            '&quot;'
+        )
+
+        .replace(
+            /'/g,
+            '&#039;'
+        );
+
+}
+
+
+/* =========================================
+   COPY HASIL
+========================================= */
+
+async function copyHasil(button=null){
+
+    if(!parsedList.length){
+
+        showToast(
+            '⚠ Belum ada hasil untuk di-copy'
+        );
+
+        return;
+    }
+
+
+    const hasil =
+        parsedList
+
+        .map(item => {
+
+            let cleanNominal =
+                item.nominal
+
+                .replace(
+                    /Rp\s?/gi,
+                    ''
+                )
+
+                .replace(
+                    /\.\d{2}$/,
+                    ''
+                )
+
+                .replace(
+                    /[.,]/g,
+                    ''
+                );
+
+
+            const numericNominal =
+                parseInt(cleanNominal) || 0;
+
+
+            return [
+
+                item.bank,
+
+                item.noRek,
+
+                item.memberCode,
+
+                item.nama,
+
+                numericNominal
+                    .toLocaleString('en-US')
+
+            ].join('\t');
+
+        })
+
+        .join('\n');
+
+
+    try{
+
+        await navigator
+            .clipboard
+            .writeText(hasil);
+
+
+        showToast(
+            `✓ ${parsedList.length} HASIL BERHASIL DI-COPY`
+        );
+
+
+        if(button){
+
+            const original =
+                button.innerHTML;
+
+
+            button.classList.add(
+                'success'
+            );
+
+
+            button.innerHTML = `
+
+                <i
+                    data-lucide="check"
+                    size="13"
+                ></i>
+
+                COPIED!
+
+            `;
+
+
+            lucide.createIcons();
+
+
+            setTimeout(() => {
+
+                button.classList.remove(
+                    'success'
+                );
+
+                button.innerHTML =
+                    original;
+
+                lucide.createIcons();
+
+            },1500);
+
+        }
+
+    }
+
+    catch(err){
+
+        const temp =
+            document.createElement(
+                'textarea'
+            );
+
+
+        temp.value =
+            hasil;
+
+
+        temp.style.position =
+            'fixed';
+
+        temp.style.opacity =
+            '0';
+
+
+        document.body.appendChild(
+            temp
+        );
+
+
+        temp.focus();
+
+        temp.select();
+
+
+        try{
+
+            document.execCommand(
+                'copy'
+            );
+
+
+            showToast(
+                `✓ ${parsedList.length} HASIL BERHASIL DI-COPY`
+            );
+
+        }
+
+        catch(e){
+
+            showToast(
+                '❌ GAGAL COPY HASIL'
+            );
+
+        }
+
+
+        document.body.removeChild(
+            temp
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PASTE
+========================================= */
+
+async function pasteText(){
+
+    try{
+
+        const text =
+            await navigator
+            .clipboard
+            .readText();
+
+
+        document
+        .getElementById('dataInput')
+        .value = text;
+
+
+        parseExcelData();
+
+
+        showToast(
+            '✓ DATA BERHASIL DI-PASTE'
+        );
+
+    }
+
+    catch(err){
+
+        alert(
+            'Gagal paste otomatis.\n\n' +
+            'Gunakan CTRL+V pada kolom teks.'
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   CLEAR
+========================================= */
+
+function clearAll(){
+
+    document
+    .getElementById('dataInput')
+    .value = '';
+
+
+    parsedList = [];
+
+
+    renderTable();
+
+
+    showToast(
+        '✓ DATA DIBERSIHKAN'
+    );
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            'toast'
+        );
+
+
+    toast.innerText =
+        message;
+
+
+    toast.classList.add(
+        'show'
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                'show'
+            );
+
+        },1800);
+
+}
+
+
+/* =========================================
+   INIT
+   (init bersama: lucide untuk SEMUA tab,
+    parse awal tab 2; state awal tab 3 sudah
+    ada di HTML sehingga tidak perlu dipanggil)
+========================================= */
+
+window.onload = function(){
+
+    lucide.createIcons();
+
+    parseExcelData();
+
+};
+
+</script>
+
+<script>
+/* ================================================================
+   SCRIPT 3 — WD PROCEAAAAASOR (versi terbaru: cutAtStatus +
+   urutan kolom BANK | NO REK | USER ID | NAMA REK | NOMINAL)
+
+   Di-salin dari file WD Processor Anda.
+   HANYA nama fungsi yang BENTROK dengan Script 2 yang di-rename
+   (logika di dalamnya TIDAK DIUBAH SAMA SEKALI):
+     renderTable -> renderWdTable
+     copyHasil   -> copyWdHasil
+     pasteText   -> pasteWdText
+     clearAll    -> clearWdAll
+     showToast   -> showWdToast (elemen toast: id="wdToast")
+   applyEwalletPrefix & escapeHTML tidak diduplikasi — isinya
+   identik dengan Script 2, dipakai bersama.
+   window.onload tidak perlu — sudah di-handle Script 2.
+================================================================ */
+
+let wdList = [];
+
+var BANK_STR = 'BCA|BRI|BNI|MANDIRI|DANA2|DANA|OVO|LINKAJA|GOPAY|CIMBNIAGA|CIMB|PERMATA|SEABANK|SHOPEEPAY|DANAMON|PANIN|MEGA|OCBC|BSI|BTN|QRIS|JENIUS';
+
+/* Kata noise yang dibuang dari NAMA */
+var NOISE_RE = /\b(accept|accepted|pending|reject|rejected|process|processing|review|success|sukses|done|cancel|canceled|cancelled|failed|gagal|operator|status|jumlah|action|hasil|dari|tujuan|terima|tanggal|bank|rek|rekening|nomor|no|a\/n)\b/gi;
+
+/* Label header laporan (deteksi baris header) */
+var LABELS = ['tanggal','terima','action','dari','tujuan','jumlah','status','operator','bank','rek','user','nama','nominal','id'];
+
+/* =========================================
+   POTONG SEMUA TEKS SETELAH KATA STATUS
+   (ACCEPT / PENDING / ... ) → nama operator
+   & keterangan lain di belakangnya
+   OTOMATIS TERBUANG, tidak masuk nama.
+========================================= */
+
+function cutAtStatus(str){
+    var m = str.match(/\b(accept(?:ed)?|pending|reject(?:ed)?|process(?:ing)?|review(?:ed)?|success|sukses|done|cancel(?:l)?(?:ed)?|failed|gagal|complete(?:d)?|waiting|confirm(?:ed)?)\b/i);
+    if(m && m.index > 0) return str.slice(0, m.index);
+    return str;
+}
+
+/* applyEwalletPrefix & escapeHTML → lihat Script 2 (identik, dipakai bersama) */
+
+/* =========================================
+   PARSER PER BARIS — ambil:
+   BANK, NO REK, USER ID, NAMA REK, NOMINAL
+========================================= */
+
+function parseLine(line){
+    var s = line.replace(/\t/g, ' ').replace(/\s+/g, ' ').trim();
+    if(!s) return null;
+
+    /* -- buang baris judul & header laporan -- */
+    if(/laporan/i.test(s)) return null;
+    if(/&\s*user/i.test(s)) return null;
+    var labelCount = 0;
+    LABELS.forEach(function(w){
+        if(new RegExp('\\b' + w + '\\b', 'i').test(s)) labelCount++;
+    });
+    if(labelCount >= 3) return null;
+
+    if(!/\d/.test(s)) return null;
+    if(!/[A-Za-z]/.test(s)) return null;
+    s = s.replace(/\brp\.?\s*/gi, ' ');
+
+    /* normalisasi tanggal renggang: "24 - 09 - 11" → "24-09-11" */
+    s = s.replace(/(\d)\s+([-\/.])\s+(\d)\s+([-\/.])\s+(\d)/g, '$1$2$3$4$5');
+
+    var user = '-', nama = '-', bank = '-', rek = '-', nominal = 0;
+
+    /* 1. Tanggal + jam (dibuang) */
+    var dtm = s.match(/\d{1,4}[-\/.]\d{1,2}[-\/.]\d{2,4}(\s+\d{1,2}:\d{2}(?::\d{2})?)?/);
+    if(dtm) s = s.replace(dtm[0], ' ');
+    s = s.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');
+
+    /* 2. USER ID = kata terakhir sebelum "Withdraw" */
+    var wm = s.match(/\b(withdraw|deposit|transfer|wd|dp)\b/i);
+    if(wm){
+        var before = s.slice(0, wm.index).trim();
+        var bt = before.split(/\s+/).filter(Boolean);
+        if(bt.length && /^\d{1,3}$/.test(bt[0])) bt.shift();
+        if(bt.length) user = bt[bt.length - 1];
+        s = s.slice(wm.index + wm[0].length);
+    }
+
+    /* 3. NO REK — nomor HP 08xx dulu */
+    var rm = s.match(/\b(0?8\d{8,12})\b/);
+    if(rm){
+        rek = rm[1];
+        s = s.replace(rek, ' ');
+        s = s.replace(/\b0?8\d{8,12}\b/g, ' ');
+    }
+    /* lalu no rekening bank 8-16 digit */
+    if(rek === '-'){
+        var rm2 = s.match(/(?:^|[\s,])(\d{8,16})\b/);
+        if(rm2){
+            rek = rm2[1];
+            s = s.replace(rek, ' ');
+        }
+    }
+
+    /* 4. BANK — kemunculan terakhir */
+    var bre = new RegExp('\\b(' + BANK_STR + ')\\b', 'gi');
+    var bAll = [], bm;
+    while((bm = bre.exec(s)) !== null) bAll.push({word: bm[1], idx: bm.index});
+    if(bAll.length){
+        var pick = bAll[bAll.length - 1];
+        bank = pick.word.toUpperCase();
+        s = s.slice(0, pick.idx) + ' ' + s.slice(pick.idx + pick.word.length);
+    }
+
+    /* 5. NOMINAL — angka berpemisah ribuan TERAKHIR */
+    var sepRe = /\b\d{1,3}(?:[.,]\d{3})+\b/g, sm, lastSep = null;
+    while((sm = sepRe.exec(s)) !== null) lastSep = sm;
+    if(lastSep){
+        nominal = parseInt(lastSep[0].replace(/[.,\s]/g, ''), 10) || 0;
+        s = s.slice(0, lastSep.index);
+    }
+
+    /* 5b. POTONG di kata status → ACCEPT, nama operator,
+           dan semua keterangan belakang GUGUR */
+    s = cutAtStatus(s);
+
+    /* 6. NOMINAL fallback — angka 4+ digit terakhir */
+    if(nominal === 0){
+        var nRe = /\b\d{4,}\b/g, nm, lastN = null;
+        while((nm = nRe.exec(s)) !== null) lastN = nm;
+        if(lastN){
+            nominal = parseInt(lastN[0], 10) || 0;
+            s = s.slice(0, lastN.index);
+        }
+        s = cutAtStatus(s);
+    }
+
+    /* 7. buang kata status / label kolom / kata umum */
+    s = s.replace(NOISE_RE, ' ');
+
+    /* 8. USER ID fallback — token campuran huruf+angka */
+    if(user === '-'){
+        var km = s.match(/\b(?=[A-Za-z0-9_]*[0-9])(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]{3,20}\b/);
+        if(km){ user = km[0]; s = s.replace(km[0], ' '); }
+    }
+
+    /* 9. NAMA REK — SEMUA kata sisa berhuruf saja,
+           termasuk kata 1 huruf seperti "I" */
+    var words = s.split(/\s+/)
+        .filter(function(w){ return w.length && /[A-Za-z]/.test(w); })
+        .map(function(w){ return w.replace(/^[\s,;:.()\[\]-]+|[\s,;:.()\[\]-]+$/g, ''); })
+        .filter(function(w){ return w.length; });
+    if(words.length) nama = words.join(' ').trim();
+
+    /* Validasi minimal */
+    if(user === '-' && nama === '-') return null;
+    if(bank === '-' && nominal === 0 && rek === '-') return null;
+
+    return {
+        bank: bank,
+        rek: rek,
+        user: user,
+        nama: nama,
+        nominal: nominal
+    };
+}
+
+/* =========================================
+   Nama rapi: "i putu adi wijaya" →
+   "I Putu Adi Wijaya"
+========================================= */
+
+function titleCaseNama(n){
+    if(n === '-' || !n) return '-';
+    return String(n).toLowerCase().replace(/\b[a-z]/g, function(c){ return c.toUpperCase(); });
+}
+
+/* =========================================
+   PARSE SEMUA BARIS
+========================================= */
+
+function parseWdData(){
+    var raw = document.getElementById('wdInput').value.trim();
+    wdList = [];
+    if(raw){
+        raw.split(/\r?\n/).forEach(function(line){
+            var item = parseLine(line);
+            if(item) wdList.push(item);
+        });
+    }
+    renderWdTable();
+}
+
+/* =========================================
+   KELAS BADGE BANK
+========================================= */
+
+function getBankClass(bank){
+    if(bank.includes('BRI')) return 'bank-bri';
+    if(bank.includes('BCA')) return 'bank-bca';
+    if(bank.includes('BNI')) return 'bank-bni';
+    if(bank.includes('MANDIRI')) return 'bank-mandiri';
+    if(bank.includes('DANA')) return 'bank-dana';
+    if(bank.includes('OVO')) return 'bank-ovo';
+    if(bank.includes('LINKAJA')) return 'bank-linkaja';
+    if(bank.includes('GOPAY')) return 'bank-gopay';
+    if(bank.includes('SEABANK')) return 'bank-seabank';
+    if(bank.includes('SHOPEEPAY')) return 'bank-shopeepay';
+    if(bank.includes('CIMB')) return 'bank-cimb';
+    if(bank.includes('DANAMON')) return 'bank-danamon';
+    if(bank.includes('PERMATA')) return 'bank-permata';
+    if(bank.includes('BSI')) return 'bank-bsi';
+    if(bank.includes('BTN')) return 'bank-btn';
+    return 'bank-default';
+}
+
+/* =========================================
+   RENDER TABEL — BANK | NO REK | USER ID |
+   NAMA REK | NOMINAL
+   (renamed: renderTable -> renderWdTable)
+========================================= */
+
+function renderWdTable(){
+    var tbody = document.getElementById('wdTableBody');
+    tbody.innerHTML = '';
+
+    if(!wdList.length){
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-row">⟡ DATA KOSONG ⟡<br>Tempel data withdraw untuk memulai.</td></tr>';
+        document.getElementById('wdCount').innerText = '0';
+        document.getElementById('wdTotal').innerText = 'Rp 0';
+        return;
+    }
+
+    var usePrefix = document.getElementById('prefixToggle').checked;
+    var total = 0;
+
+    wdList.forEach(function(item){
+        var rek = item.rek;
+        if(usePrefix && item.bank !== '-') rek = applyEwalletPrefix(item.bank, rek);
+
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+            '<td><span class="bank-badge ' + getBankClass(item.bank) + '">' + escapeHTML(item.bank) + '</span></td>' +
+            '<td style="font-family:monospace;letter-spacing:.5px">' + escapeHTML(rek) + '</td>' +
+            '<td style="color:#ffd54a;font-weight:750;text-shadow:0 0 7px rgba(255,193,7,.35)">' + escapeHTML(item.user) + '</td>' +
+            '<td>' + escapeHTML(titleCaseNama(item.nama)) + '</td>' +
+            '<td style="text-align:right;font-weight:950;color:#fff4bf;text-shadow:0 0 7px rgba(255,193,7,.22)">' + item.nominal.toLocaleString('en-US') + '</td>';
+        tbody.appendChild(tr);
+        total += item.nominal;
+    });
+
+    document.getElementById('wdCount').innerText = wdList.length;
+    document.getElementById('wdTotal').innerText = 'Rp ' + total.toLocaleString('en-US');
+}
+
+/* =========================================
+   COPY HASIL — TSV siap Excel
+   BANK \t NO REK \t USER ID \t NAMA REK \t NOMINAL
+   (renamed: copyHasil -> copyWdHasil)
+========================================= */
+
+async function copyWdHasil(button){
+    if(!wdList.length){
+        showWdToast('⚠ Belum ada hasil untuk di-copy');
+        return;
+    }
+
+    var usePrefix = document.getElementById('prefixToggle').checked;
+
+    var hasil = wdList.map(function(item){
+        var rek = item.rek;
+        if(usePrefix && item.bank !== '-') rek = applyEwalletPrefix(item.bank, rek);
+        return [
+            item.bank,
+            rek,
+            item.user,
+            titleCaseNama(item.nama),
+            item.nominal.toLocaleString('en-US')
+        ].join('\t');
+    }).join('\n');
+
+    try{
+        await navigator.clipboard.writeText(hasil);
+        showWdToast('✓ ' + wdList.length + ' HASIL BERHASIL DI-COPY');
+        if(button){
+            var original = button.innerHTML;
+            button.classList.add('success');
+            button.innerHTML = '<i data-lucide="check" size="13"></i> COPIED!';
+            lucide.createIcons();
+            setTimeout(function(){
+                button.classList.remove('success');
+                button.innerHTML = original;
+                lucide.createIcons();
+            }, 1500);
+        }
+    }
+    catch(err){
+        var temp = document.createElement('textarea');
+        temp.value = hasil;
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.focus();
+        temp.select();
+        try{
+            document.execCommand('copy');
+            showWdToast('✓ ' + wdList.length + ' HASIL BERHASIL DI-COPY');
+        }
+        catch(e){
+            showWdToast('❌ GAGAL COPY HASIL');
+        }
+        document.body.removeChild(temp);
+    }
+}
+
+/* =========================================
+   PASTE (renamed: pasteText -> pasteWdText)
+========================================= */
+
+async function pasteWdText(){
+    try{
+        var text = await navigator.clipboard.readText();
+        document.getElementById('wdInput').value = text;
+        parseWdData();
+        showWdToast('✓ DATA BERHASIL DI-PASTE');
+    }
+    catch(err){
+        alert('Gagal paste otomatis.\n\nGunakan CTRL+V pada kolom teks.');
+    }
+}
+
+/* =========================================
+   CLEAR (renamed: clearAll -> clearWdAll)
+========================================= */
+
+function clearWdAll(){
+    document.getElementById('wdInput').value = '';
+    wdList = [];
+    renderWdTable();
+    showWdToast('✓ DATA DIBERSIHKAN');
+}
+
+/* =========================================
+   TOAST (renamed: showToast -> showWdToast,
+   elemen: id="wdToast")
+========================================= */
+
+var wdToastTimer;
+function showWdToast(message){
+    var toast = document.getElementById('wdToast');
+    toast.innerText = message;
+    toast.classList.add('show');
+    clearTimeout(wdToastTimer);
+    wdToastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+}
+
+</script>
+
+<script>
+/* ================================================================
+   KODE TAB — satu-satunya JavaScript baru.
+   Semua fungsi dari ketiga script asli di atas tidak diubah.
+================================================================ */
+function showTab(id, btn){
+    var panels = document.querySelectorAll('.tab-panel');
+    for(var i = 0; i < panels.length; i++){
+        panels[i].classList.remove('active');
+    }
+    document.getElementById(id).classList.add('active');
+    var btns = document.querySelectorAll('.tab-btn');
+    for(var j = 0; j < btns.length; j++){
+        btns[j].classList.remove('active');
+    }
+    if(btn){ btn.classList.add('active'); }
+}
+</script>
+
+<script>
+/* ================================================================
+   SCRIPT 4 — LOGIN GATE
+   Satu-satunya penambahan JavaScript baru.
+   Semua fungsi dari script asli (1, 2, 3 & kode tab) TIDAK diubah.
+================================================================ */
+
+/* ================= KONFIGURASI — SILAKAN EDIT DI SINI ================ */
+
+/* Daftar akun yang boleh masuk. Tambah / ganti / hapus bebas:
+   { u: "username", p: "password", r: "NAMA ROLE" }                    */
+var AKUN_LOGIN = [
+    { u: "vozaaamen88",    p: "200329",    r: "ADMIN"    },
+    { u: "operator", p: "operator123", r: "OPERATOR" }
+];
+
+/* true  = tampilkan kredensial demo di layar login
+   false = sembunyikan (ganti ke false saat sudah dipakai serius)     */
+var TAMPILKAN_HINT = false;
+
+/* Lama sesi login dalam MENIT sejak login (0 = tanpa batas waktu,
+   logout manual lewat tombol LOGOUT).                                 */
+var DURASI_SESI_MENIT = 0;
+
+/* "Ingat saya" bertahan selama berapa jam di browser tersebut.        */
+var INGAT_JAM = 24;
+
+/* Batas password salah sebelum diminta menunggu.                      */
+var MAX_COBA     = 5;
+var TUNGGU_DETIK = 30;
+
+/* ===================================================================== */
+
+var LG_KEY_S = "sc_login_session";   /* sessionStorage (per tab)      */
+var LG_KEY_R = "sc_login_remember";  /* localStorage (ingat saya)     */
+var lgAttempts = 0, lgLockUntil = 0, lgLockTimer = null, lgExpireAt = 0;
+
+function lgEl(id){ return document.getElementById(id); }
+
+function simpanSesi(akun, ingat){
+    var data = { u: akun.u, r: akun.r, t: Date.now() };
+    try{
+        if(ingat){
+            data.exp = Date.now() + (INGAT_JAM*60*60*1000);
+            localStorage.setItem(LG_KEY_R, JSON.stringify(data));
+        } else {
+            sessionStorage.setItem(LG_KEY_S, JSON.stringify(data));
+        }
+    }catch(e){}
+}
+
+function bacaSesi(){
+    try{
+        var raw = localStorage.getItem(LG_KEY_R);
+        if(raw){
+            var d = JSON.parse(raw);
+            if(d && d.u && d.exp && Date.now() <= d.exp) return d;
+            localStorage.removeItem(LG_KEY_R);
+            return null;
+        }
+        raw = sessionStorage.getItem(LG_KEY_S);
+        if(raw){
+            var s = JSON.parse(raw);
+            if(s && s.u) return s;
+        }
+        return null;
+    }catch(e){ return null; }
+}
+
+function hapusSesi(){
+    try{ sessionStorage.removeItem(LG_KEY_S); }catch(e){}
+    try{ localStorage.removeItem(LG_KEY_R); }catch(e){}
+}
+
+function bukaGate(silent){
+    var d = bacaSesi() || {};
+    lgEl("ubName").textContent = String(d.u || "-").toUpperCase();
+    lgEl("ubRole").textContent = d.r || "-";
+    lgEl("userbar").classList.add("on");
+    if(typeof refreshAkunUI === "function"){ try{ refreshAkunUI(d); }catch(e){} }
+    if(DURASI_SESI_MENIT > 0){ lgExpireAt = (d.t || Date.now()) + DURASI_SESI_MENIT*60000; }
+    document.body.classList.remove("locked");
+    var gate = lgEl("loginGate");
+    gate.classList.add("gate-off");
+    setTimeout(function(){ gate.style.display = "none"; }, 500);
+    if(!silent){
+        try{ showToast("\u2713 Selamat datang, " + String(d.u || "").toUpperCase() + "!"); }catch(e){}
+    }
+}
+
+function kunciGate(){
+    lgExpireAt = 0;
+    document.body.classList.add("locked");
+    lgEl("userbar").classList.remove("on");
+    var tbA = lgEl("tabBtnAkun"); if(tbA){ tbA.style.display = "none"; }
+    var gate = lgEl("loginGate");
+    gate.style.display = "flex";
+    void gate.offsetHeight; /* paksa reflow agar transisi fade berjalan */
+    gate.classList.remove("gate-off");
+    lgEl("lgPass").value = "";
+    setTimeout(function(){ try{ lgEl("lgUser").focus(); }catch(e){} }, 350);
+}
+
+function doLogout(){
+    hapusSesi();
+    lgAttempts = 0; lgLockUntil = 0;
+    if(lgLockTimer){ clearInterval(lgLockTimer); lgLockTimer = null; }
+    var m = lgEl("lgMsg"); m.textContent = ""; m.className = "lg-msg";
+    var f = lgEl("loginForm"); f.reset();
+    lgEl("lgBtn").disabled = false;
+    lgEl("lgUser").disabled = false; lgEl("lgPass").disabled = false;
+    kunciGate();
+}
+
+function toggleLgPass(){
+    var inp = lgEl("lgPass"), eye = lgEl("lgEye");
+    var tampil = inp.type === "password";
+    inp.type = tampil ? "text" : "password";
+    eye.innerHTML = tampil ? "&#128056;" : "&#128065;";
+}
+
+function lgSetMsg(txt, cls){
+    var m = lgEl("lgMsg");
+    m.textContent = txt;
+    m.className = "lg-msg" + (cls ? " " + cls : "");
+}
+
+function cekAkun(u, p){
+    u = String(u || "").trim(); p = String(p || "");
+    var semua = AKUN_LOGIN.concat((typeof bacaDisetujui === "function") ? bacaDisetujui() : []);
+    for(var i = 0; i < semua.length; i++){
+        if(semua[i].u === u && semua[i].p === p) return semua[i];
+    }
+    return null;
+}
+
+function lgLockdown(){
+    lgLockUntil = Date.now() + TUNGGU_DETIK*1000;
+    lgEl("lgBtn").disabled = true;
+    lgEl("lgUser").disabled = true; lgEl("lgPass").disabled = true;
+    lgLockTimer = setInterval(function(){
+        var sisa = Math.ceil((lgLockUntil - Date.now())/1000);
+        if(sisa <= 0){
+            clearInterval(lgLockTimer); lgLockTimer = null;
+            lgAttempts = 0; lgLockUntil = 0;
+            lgEl("lgBtn").disabled = false;
+            lgEl("lgUser").disabled = false; lgEl("lgPass").disabled = false;
+            lgSetMsg("Silakan coba lagi.", "");
+        } else {
+            lgSetMsg("TERKUNCI \u2014 coba lagi dalam " + sisa + " detik...", "err");
+        }
+    }, 250);
+}
+
+function lgSubmit(){
+    if(Date.now() < lgLockUntil) return;
+    var mode = lgEl("loginForm").classList.contains("regmode") ? "daftar" : "masuk";
+    if(mode === "daftar"){
+        if(typeof lgDaftar === "function"){ lgDaftar(); }
+        return;
+    }
+    var u = lgEl("lgUser").value, p = lgEl("lgPass").value;
+    if(!u.trim() || !p){
+        lgSetMsg("Username dan password wajib diisi.", "err");
+        return;
+    }
+    var akun = cekAkun(u, p);
+    var box = document.querySelector(".lg-box");
+    if(!akun){
+        var pu = u.trim(), pend = (typeof bacaPending === "function") ? bacaPending() : [], k, menunggu = false;
+        for(k = 0; k < pend.length; k++){ if(pend[k].u === pu){ menunggu = true; break; } }
+        if(menunggu){
+            box.classList.remove("lg-shake"); void box.offsetWidth; box.classList.add("lg-shake");
+            lgSetMsg("\u23F3 Akun '" + pu + "' sudah mendaftar & MENUNGGU PERSETUJUAN ADMIN.", "err");
+            return;
+        }
+        lgAttempts++;
+        box.classList.remove("lg-shake"); void box.offsetWidth; box.classList.add("lg-shake");
+        if(lgAttempts >= MAX_COBA){
+            lgSetMsg("Terlalu banyak percobaan salah!", "err");
+            lgLockdown();
+        } else {
+            lgSetMsg("\u2716 Username atau password salah! (percobaan " + lgAttempts + "/" + MAX_COBA + ")", "err");
+        }
+        return;
+    }
+    lgAttempts = 0;
+    simpanSesi(akun, lgEl("lgRemember").checked);
+    lgSetMsg("\u2713 Akses diterima. Membuka sistem...", "ok");
+    setTimeout(function(){ bukaGate(false); }, 450);
+}
+
+/* Enter pada kolom input = klik MASUK */
+lgEl("lgUser").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); lgSubmit(); } });
+lgEl("lgPass").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); lgSubmit(); } });
+
+/* === INISIALISASI ===
+   Session valid  -> langsung buka sistem (auto-login)
+   Tidak ada sesi -> tampilkan layar login                               */
+(function(){
+    if(TAMPILKAN_HINT){
+        var h = "";
+        for(var i = 0; i < AKUN_LOGIN.length; i++){
+            h += (i > 0 ? " &nbsp;\u2022&nbsp; " : "") + "<b>" + AKUN_LOGIN[i].u + " / " + AKUN_LOGIN[i].p + "</b>";
+        }
+        lgEl("lgHint").innerHTML = "AKUN: " + h;
+        lgEl("lgHint").style.display = "block";
+    }
+    var d = bacaSesi();
+    if(d && d.u){ bukaGate(true); } else { kunciGate(); }
+})();
+
+/* Jam live di layar login + pemeriksa kedaluwarsa sesi (tiap detik) */
+setInterval(function(){
+    var c = lgEl("lgClock");
+    if(c && c.offsetParent !== null){
+        c.textContent = new Date().toLocaleTimeString("id-ID");
+    }
+    if(lgExpireAt && Date.now() > lgExpireAt){ doLogout(); }
+}, 1000);
+</script>
+
+<script>
+/* ================================================================
+   SCRIPT 5 — DAFTAR AKUN & PERSETUJUAN ADMIN
+   Pengguna baru dapat mendaftar lewat tab "DAFTAR" di layar login.
+   Akun baru masuk daftar MENUNGGU PERSETUJUAN dan baru bisa login
+   setelah disetujui oleh user ber-role ADMIN (tab "AKUN" di dalam
+   sistem). Data tersimpan di localStorage browser ini.
+================================================================ */
+
+/* true = izinkan pendaftaran mandiri; false = sembunyikan tab DAFTAR */
+var IZINKAN_DAFTAR = true;
+
+var LG_KEY_P = "sc_akun_pending";     /* pengajuan menunggu persetujuan */
+var LG_KEY_A = "sc_akun_disetujui";   /* akun hasil persetujuan         */
+
+function bacaPending(){
+    try{ var a = JSON.parse(localStorage.getItem(LG_KEY_P) || "[]"); return (a instanceof Array) ? a : []; }
+    catch(e){ return []; }
+}
+function simpanPending(a){ try{ localStorage.setItem(LG_KEY_P, JSON.stringify(a)); }catch(e){} }
+
+function bacaDisetujui(){
+    try{ var a = JSON.parse(localStorage.getItem(LG_KEY_A) || "[]"); return (a instanceof Array) ? a : []; }
+    catch(e){ return []; }
+}
+function simpanDisetujui(a){ try{ localStorage.setItem(LG_KEY_A, JSON.stringify(a)); }catch(e){} }
+
+function fmtWaktuAkun(t){
+    try{ return new Date(t).toLocaleString("id-ID"); }catch(e){ return "-"; }
+}
+
+function isAdminSesi(){
+    var d = bacaSesi();
+    return !!(d && String(d.r || "").toUpperCase() === "ADMIN");
+}
+
+/* === MODE MASUK / DAFTAR pada layar login === */
+function lgSetMode(mode){
+    var daftar = (mode === "daftar");
+    if(daftar && !IZINKAN_DAFTAR){
+        lgSetMsg("Pendaftaran mandiri sedang dinonaktifkan ADMIN.", "err");
+        return;
+    }
+    lgEl("loginForm").classList.toggle("regmode", daftar);
+    lgEl("lgTabMasuk").classList.toggle("active", !daftar);
+    lgEl("lgTabDaftar").classList.toggle("active", daftar);
+    lgEl("lgBtn").innerHTML = daftar ? "&#128221; DAFTAR" : "&#9889; MASUK";
+    lgEl("lgPass2").value = "";
+    lgSetMsg("", "");
+}
+
+/* === PROSES PENDAFTARAN === */
+function lgDaftar(){
+    var u = String(lgEl("lgUser").value || "").trim();
+    var p = lgEl("lgPass").value, p2 = lgEl("lgPass2").value, i;
+    if(!u || !p || !p2){ lgSetMsg("Semua kolom wajib diisi.", "err"); return; }
+    if(!/^[A-Za-z0-9_.]{3,20}$/.test(u)){ lgSetMsg("Username 3-20 karakter (huruf/angka/titik/underscore).", "err"); return; }
+    if(p.length < 4){ lgSetMsg("Password minimal 4 karakter.", "err"); return; }
+    if(p !== p2){ lgSetMsg("Password dan ulangi password tidak sama.", "err"); return; }
+
+    var pend = bacaPending(), appr = bacaDisetujui();
+    for(i = 0; i < pend.length; i++){ if(pend[i].u === u){ lgSetMsg("Username '" + u + "' sudah mendaftar & menunggu persetujuan.", "err"); return; } }
+    for(i = 0; i < appr.length; i++){ if(appr[i].u === u){ lgSetMsg("Username '" + u + "' sudah terdaftar. Silakan MASUK.", "err"); return; } }
+    for(i = 0; i < AKUN_LOGIN.length; i++){ if(AKUN_LOGIN[i].u === u){ lgSetMsg("Username '" + u + "' sudah dipakai. Gunakan yang lain.", "err"); return; } }
+
+    pend.push({ u: u, p: p, t: Date.now() });
+    simpanPending(pend);
+
+    lgSetMsg("\u2713 Pendaftaran terkirim! Menunggu persetujuan ADMIN.", "ok");
+    lgEl("lgPass").value = "";
+    lgEl("lgPass2").value = "";
+    setTimeout(function(){
+        lgSetMode("masuk");
+        lgEl("lgUser").value = u;
+        lgSetMsg("Silakan MASUK setelah akun Anda disetujui ADMIN.", "");
+    }, 2200);
+}
+
+/* === BADGE JUMLAH PENGAJUAN PADA TAB AKUN === */
+var _akunBadgeLast = -1, _akunSigLast = "";
+
+function refreshAkunBadge(){
+    var b = lgEl("akunBadge");
+    if(!b) return;
+    var n = bacaPending().length;
+    if(n !== _akunBadgeLast){
+        _akunBadgeLast = n;
+        b.innerText = n;
+        b.style.display = (n > 0) ? "inline-block" : "none";
+    }
+}
+
+function akunSignature(){
+    return JSON.stringify(bacaPending()) + "|" + JSON.stringify(bacaDisetujui());
+}
+
+/* === TAMPILKAN / SEMBUNYIKAN TAB AKUN SESUAI ROLE === */
+function refreshAkunUI(d){
+    var btn = lgEl("tabBtnAkun");
+    if(!btn) return;
+    var isAdmin = !!(d && String(d.r || "").toUpperCase() === "ADMIN");
+    btn.style.display = isAdmin ? "" : "none";
+    if(isAdmin){
+        renderAkunPanel();
+    } else {
+        var panel = lgEl("tabAkun");
+        if(panel && panel.classList.contains("active")){
+            panel.classList.remove("active");
+            var tbs = document.querySelectorAll(".tabbar .tab-btn"), i;
+            for(i = 0; i < tbs.length; i++){ tbs[i].classList.remove("active"); }
+            if(tbs[0]){ tbs[0].classList.add("active"); }
+            var p1 = document.getElementById("tab1");
+            if(p1){ p1.classList.add("active"); }
+        }
+    }
+    refreshAkunBadge();
+}
+
+/* === RENDER TABEL MANAJEMEN AKUN === */
+function renderAkunPanel(){
+    if(!isAdminSesi()) return;
+    var pend = bacaPending(), appr = bacaDisetujui(), i, h;
+    var tbp = lgEl("akunPendingBody"), tbr = lgEl("akunRegBody");
+    if(!tbp || !tbr) return;
+
+    if(!pend.length){
+        tbp.innerHTML = '<tr><td colspan="5" class="ak-empty">TIDAK ADA PENGAJUAN BARU</td></tr>';
+    } else {
+        h = "";
+        for(i = 0; i < pend.length; i++){
+            h += '<tr>'
+              + '<td>' + (i + 1) + '</td>'
+              + '<td class="ak-user">' + escapeHTML(pend[i].u) + '</td>'
+              + '<td class="ak-time">' + fmtWaktuAkun(pend[i].t) + '</td>'
+              + '<td><select class="ak-role" id="akunRole' + i + '"><option value="OPERATOR">OPERATOR</option><option value="ADMIN">ADMIN</option></select></td>'
+              + '<td><button type="button" class="abtn abtn-ok" onclick="setujuiAkun(' + i + ')">\u2713 SETUJUI</button><button type="button" class="abtn abtn-no" onclick="tolakAkun(' + i + ')">\u2715 TOLAK</button></td>'
+              + '</tr>';
+        }
+        tbp.innerHTML = h;
+    }
+    lgEl("akunPendingCount").innerText = pend.length;
+
+    if(!appr.length){
+        tbr.innerHTML = '<tr><td colspan="5" class="ak-empty">BELUM ADA AKUN HASIL PERSETUJUAN</td></tr>';
+    } else {
+        h = "";
+        for(i = 0; i < appr.length; i++){
+            h += '<tr>'
+              + '<td>' + (i + 1) + '</td>'
+              + '<td class="ak-user">' + escapeHTML(appr[i].u) + '</td>'
+              + '<td>' + escapeHTML(appr[i].r || "OPERATOR") + '</td>'
+              + '<td class="ak-time">' + fmtWaktuAkun(appr[i].t) + '</td>'
+              + '<td><button type="button" class="abtn abtn-no" onclick="hapusAkunReg(' + i + ')">\u2715 HAPUS</button></td>'
+              + '</tr>';
+        }
+        tbr.innerHTML = h;
+    }
+    lgEl("akunRegCount").innerText = appr.length;
+    _akunSigLast = akunSignature();
+    refreshAkunBadge();
+}
+
+/* === AKSI: SETUJUI / TOLAK / HAPUS === */
+function setujuiAkun(i){
+    if(!isAdminSesi()) return;
+    var pend = bacaPending();
+    if(i < 0 || i >= pend.length) return;
+    var akun = pend[i];
+    var roleEl = lgEl("akunRole" + i);
+    var role = roleEl ? roleEl.value : "OPERATOR";
+    pend.splice(i, 1);
+    simpanPending(pend);
+    var appr = bacaDisetujui();
+    appr.push({ u: akun.u, p: akun.p, r: role, t: Date.now() });
+    simpanDisetujui(appr);
+    renderAkunPanel();
+    try{ showToast("\u2713 Akun " + String(akun.u).toUpperCase() + " disetujui sebagai " + role); }catch(e){}
+}
+
+function tolakAkun(i){
+    if(!isAdminSesi()) return;
+    var pend = bacaPending();
+    if(i < 0 || i >= pend.length) return;
+    if(!confirm("Tolak & hapus pendaftaran '" + pend[i].u + "'?")) return;
+    var u = pend[i].u;
+    pend.splice(i, 1);
+    simpanPending(pend);
+    renderAkunPanel();
+    try{ showToast("\u2715 Pendaftaran " + String(u).toUpperCase() + " ditolak"); }catch(e){}
+}
+
+function hapusAkunReg(i){
+    if(!isAdminSesi()) return;
+    var appr = bacaDisetujui();
+    if(i < 0 || i >= appr.length) return;
+    if(!confirm("Hapus akun '" + appr[i].u + "'? Akun tersebut tidak akan bisa login lagi.")) return;
+    var u = appr[i].u;
+    appr.splice(i, 1);
+    simpanDisetujui(appr);
+    renderAkunPanel();
+    try{ showToast("\u2715 Akun " + String(u).toUpperCase() + " dihapus"); }catch(e){}
+}
+
+/* === INISIALISASI SCRIPT 5 === */
+(function(){
+    if(!IZINKAN_DAFTAR){
+        var b = lgEl("lgTabDaftar");
+        if(b){ b.style.display = "none"; }
+    }
+    lgEl("lgPass2").addEventListener("keydown", function(e){
+        if(e.key === "Enter"){ e.preventDefault(); lgSubmit(); }
+    });
+    var d = bacaSesi();
+    if(d && d.u){ refreshAkunUI(d); }
+    refreshAkunBadge();
+})();
+
+/* Sinkron antar tab: pengajuan baru langsung terlihat oleh ADMIN */
+setInterval(function(){
+    refreshAkunBadge();
+    var p = lgEl("tabAkun");
+    if(p && p.classList.contains("active") && isAdminSesi() && akunSignature() !== _akunSigLast){
+        renderAkunPanel();
+    }
+}, 2000);
+</script>
+
+<script>
+/* ================================================================
+   SCRIPT 6 — NOTIFIKASI SUARA (Web Audio API — TANPA file audio)
+   Semua bunyi dibangkitkan langsung oleh browser (oscillator),
+   jadi tidak butuh file .mp3 dan tetap jalan offline.
+   Tombol ON/OFF: tombol "SUARA" di user bar (preferensi disimpan).
+   Kode asli SCRIPT 1-5 TIDAK diubah sama sekali — hanya dibungkus.
+================================================================ */
+
+/* ============ KONFIGURASI — SILAKAN EDIT DI SINI ============ */
+
+/* Suara aktif secara default? (false = mulai dalam keadaan bisu) */
+var SUARA_DEFAULT_AKTIF = true;
+
+/* Volume keseluruhan 0.0 - 1.0 (jangan lebih dari 0.3 agar tidak pecah) */
+var SUARA_VOLUME = 1.0;
+
+/* ============================================================ */
+
+var SND_KEY    = "sc_sound";   /* preferensi on/off di localStorage */
+var _sndCtx    = null;
+var _sndLast   = {};           /* throttle per jenis suara          */
+var SND_MIN_JEDA = { ok: 500, kaching: 1500, err: 1500, sent: 500, alert: 4000 };
+
+function sndAktif(){
+    try{ var v = localStorage.getItem(SND_KEY); if(v !== null){ return v === "1"; } }catch(e){}
+    return SUARA_DEFAULT_AKTIF;
+}
+
+function sndUpdateBtn(){
+    var b = document.getElementById("sndBtn"); if(!b) return;
+    var on = sndAktif();
+    b.innerHTML = on ? "&#128266; SUARA" : "&#128263; BISU";
+    b.classList.toggle("snd-off", !on);
+}
+
+function sndToggle(){
+    var nyala = sndAktif();
+    try{ localStorage.setItem(SND_KEY, nyala ? "0" : "1"); }catch(e){}
+    sndUpdateBtn();
+    if(!nyala){ _sndLast.ok = 0; sndBeep("ok"); }
+    try{ showToast(!nyala ? "\uD83D\uDD0A Notifikasi suara AKTIF" : "\uD83D\uDD07 Notifikasi suara BISU"); }catch(e){}
+}
+
+function sndCtx(){
+    if(!sndAktif()) return null;
+    try{
+        if(!_sndCtx){
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if(!AC){ return null; }
+            _sndCtx = new AC();
+        }
+        if(_sndCtx.state === "suspended"){ _sndCtx.resume(); }
+        return (_sndCtx.state === "running") ? _sndCtx : null;
+    }catch(e){ return null; }
+}
+
+function sndTone(ctx, freq, at, dur, type, vol, slideTo){
+    try{
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type;
+        o.frequency.setValueAtTime(freq, at);
+        if(slideTo){ o.frequency.exponentialRampToValueAtTime(slideTo, at + dur); }
+        g.gain.setValueAtTime(0.0001, at);
+        g.gain.exponentialRampToValueAtTime(Math.max(0.001, (vol || 0.1) * SUARA_VOLUME), at + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+        o.connect(g); g.connect(ctx.destination);
+        o.start(at); o.stop(at + dur + 0.05);
+    }catch(e){}
+}
+
+function sndBeep(jenis){
+    var ctx = sndCtx(); if(!ctx){ return; }
+    var now = Date.now(), jeda = SND_MIN_JEDA[jenis] || 800;
+    if(_sndLast[jenis] && (now - _sndLast[jenis]) < jeda){ return; }
+    _sndLast[jenis] = now;
+    var t = ctx.currentTime + 0.02;
+    switch(jenis){
+        case "ok":      /* login sukses / akun disetujui / suara dinyalakan */
+            sndTone(ctx, 523.25, t,       0.10, "square", 0.08);
+            sndTone(ctx, 659.25, t + .10, 0.10, "square", 0.08);
+            sndTone(ctx, 783.99, t + .20, 0.18, "square", 0.09);
+            break;
+        case "kaching": /* transaksi baru terbaca (depo / wd) */
+            sndTone(ctx, 1318.5, t,       0.08, "square", 0.10);
+            sndTone(ctx, 1760,   t + .085,0.22, "square", 0.10);
+            break;
+        case "err":     /* login salah / pendaftaran ditolak / akun dihapus */
+            sndTone(ctx, 220,    t,       0.14, "sawtooth", 0.09);
+            sndTone(ctx, 155,    t + .15, 0.22, "sawtooth", 0.09);
+            break;
+        case "sent":    /* pendaftaran terkirim / hasil tersalin */
+            sndTone(ctx, 880,    t,       0.07, "sine", 0.12);
+            sndTone(ctx, 1244.5, t + .08, 0.14, "sine", 0.12);
+            break;
+        case "alert":   /* ADMIN: ada pendaftaran baru masuk */
+            sndTone(ctx, 987.77, t,       0.12, "triangle", 0.12);
+            sndTone(ctx, 659.25, t + .16, 0.12, "triangle", 0.12);
+            sndTone(ctx, 987.77, t + .32, 0.20, "triangle", 0.13);
+            break;
+    }
+}
+
+/* === Pembungkus fungsi asli — kode asli TIDAK disentuh === */
+function sndWrap(nama, sesudah){
+    var asli = window[nama];
+    if(typeof asli !== "function"){ return; }
+    window[nama] = function(){
+        var hasil = asli.apply(this, arguments);
+        try{ sesudah.apply(this, arguments); }catch(e){}
+        return hasil;
+    };
+}
+function sndWrapAsync(nama, sesudah){
+    var asli = window[nama];
+    if(typeof asli !== "function"){ return; }
+    window[nama] = function(){
+        var hasil = asli.apply(this, arguments);
+        Promise.resolve(hasil).then(function(){ try{ sesudah(); }catch(e){} }).catch(function(){});
+        return hasil;
+    };
+}
+
+/* 1) Pesan layar login: "ok" = chime, "err" = buzz.
+      Pesan hitung mundur "TERKUNCI ..." di-skip agar tidak berbunyi
+      setiap 250ms (bunyi error sudah keluar saat pesan pertama).      */
+sndWrap("lgSetMsg", function(txt, cls){
+    if(cls === "ok"){ sndBeep("ok"); }
+    else if(cls === "err" && typeof txt === "string" && txt.indexOf("TERKUNCI") !== 0){ sndBeep("err"); }
+});
+
+/* 2) Tab 1 (SC DEPO BCA) — tombol Proses Data:
+      kaching saat transaksi terbaca, buzz bila data gagal dibaca.     */
+sndWrap("processCleanData", function(){
+    var st = document.getElementById("status");
+    if(st && String(st.className).indexOf("err") >= 0){ sndBeep("err"); return; }
+    var tc = document.getElementById("totalCount");
+    var n = tc ? (parseInt(tc.innerText, 10) || 0) : 0;
+    if(n > 0){ sndBeep("kaching"); }
+});
+
+/* 3) Tab 2 (WD ALL BANK) — tempel/ketik data (oninput):
+      kaching HANYA saat jumlah pending NAIK (bukan tiap ketikan,
+      di-debounce 600ms). Reset saat data dibersihkan.                 */
+var _sndPcLast = 0, _sndPcTimer = null;
+function sndResetPc(){ _sndPcLast = 0; }
+sndWrap("parseExcelData", function(){
+    if(_sndPcTimer){ clearTimeout(_sndPcTimer); }
+    _sndPcTimer = setTimeout(function(){
+        _sndPcTimer = null;
+        var el = document.getElementById("pendingCount");
+        var n = el ? (parseInt(String(el.innerText).replace(/[^0-9]/g, ""), 10) || 0) : 0;
+        if(n > _sndPcLast && n > 0){ sndBeep("kaching"); }
+        _sndPcLast = n;
+    }, 600);
+});
+sndWrap("clearAll",     sndResetPc);
+sndWrap("clearAllData", sndResetPc);
+
+/* 4) Salin hasil (kedua tab) — blip saat data benar-benar tersalin.  */
+sndWrapAsync("copyCleanData", function(){
+    var st = document.getElementById("status");
+    if(st && String(st.className).indexOf("ok") >= 0){ sndBeep("sent"); }
+});
+sndWrapAsync("copyHasil", function(){
+    try{ if(typeof parsedList !== "undefined" && parsedList && parsedList.length){ sndBeep("sent"); } }catch(e){}
+});
+
+/* 5) Manajemen akun (tab AKUN):
+      setujui  -> chime
+      tolak/hapus -> buzz HANYA jika data benar-benar berubah
+                     (bukan saat dialog confirm dibatalkan).
+      PENTING: setiap fungsi dibungkus lewat helper agar punya
+      referensi "asli" miliknya sendiri (jangan berbagi satu variabel
+      closure — semua wrapper akan memanggil fungsi terakhir!).        */
+function sndAkunSig(){ return JSON.stringify(bacaPending()) + "|" + JSON.stringify(bacaDisetujui()); }
+function sndWrapAkun(nama, jenis){
+    var asli = window[nama];
+    if(typeof asli !== "function"){ return; }
+    window[nama] = function(){
+        var s0 = (jenis === "ubah") ? sndAkunSig() : null;
+        var r = asli.apply(this, arguments);
+        try{
+            if(jenis === "ubah"){ if(sndAkunSig() !== s0){ sndBeep("err"); } }
+            else{ sndBeep("ok"); }
+        }catch(e){}
+        return r;
+    };
+}
+sndWrapAkun("setujuiAkun",  "ok");
+sndWrapAkun("tolakAkun",    "ubah");
+sndWrapAkun("hapusAkunReg", "ubah");
+
+/* 5b) Saat tab AKUN dibuka, render tabelnya seketika
+       (tanpa menunggu sinkronisasi interval 2 detik).                  */
+sndWrap("showTab", function(id){
+    if(id === "tabAkun" && typeof isAdminSesi === "function" && isAdminSesi() && typeof renderAkunPanel === "function"){
+        try{ renderAkunPanel(); }catch(e){}
+    }
+});
+
+/* 6) ADMIN: bunyi "alert" saat ada PENGAJUAN BARU masuk.
+      Mendengar perubahan localStorage lintas tab (event "storage")
+      + polling cadangan tiap 3 detik selama admin sedang login.       */
+var _sndPendLast = -1;
+function sndCekPengajuan(){
+    var admin = false;
+    try{ admin = (typeof isAdminSesi === "function") && isAdminSesi(); }catch(e){}
+    var n = 0;
+    try{ n = (typeof bacaPending === "function") ? bacaPending().length : 0; }catch(e){}
+    if(admin && _sndPendLast >= 0 && n > _sndPendLast){
+        sndBeep("alert");
+        try{ showToast("\uD83D\uDCE5 " + (n - _sndPendLast) + " pendaftaran BARU menunggu persetujuan Anda!"); }catch(e){}
+    }
+    _sndPendLast = n;
+}
+window.addEventListener("storage", function(e){
+    if(e && (e.key === LG_KEY_P || e.key === LG_KEY_A)){ setTimeout(sndCekPengajuan, 150); }
+});
+
+/* 7) INISIALISASI:
+      - label tombol SUARA sesuai preferensi tersimpan
+      - preferensi suara tersinkron antar tab
+      - polling pengajuan baru hanya saat user sedang login            */
+(function(){
+    sndUpdateBtn();
+    window.addEventListener("storage", function(e){ if(e && e.key === SND_KEY){ sndUpdateBtn(); } });
+    setInterval(function(){
+        var ub = document.getElementById("userbar");
+        if(ub && ub.classList.contains("on")){ sndCekPengajuan(); }
+    }, 3000);
+})();
+</script>
+</body>
+</html>
